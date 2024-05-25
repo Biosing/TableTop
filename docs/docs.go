@@ -21,6 +21,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Characters"
+                ],
                 "summary": "List all characters",
                 "responses": {
                     "200": {
@@ -41,6 +44,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Characters"
                 ],
                 "summary": "Update a character",
                 "parameters": [
@@ -71,6 +77,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Characters"
+                ],
                 "summary": "Create a new character",
                 "parameters": [
                     {
@@ -99,6 +108,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Characters"
+                ],
                 "summary": "Get a character by ID",
                 "parameters": [
                     {
@@ -120,6 +132,9 @@ const docTemplate = `{
             },
             "delete": {
                 "description": "Delete a character by ID",
+                "tags": [
+                    "Characters"
+                ],
                 "summary": "Delete a character by ID",
                 "parameters": [
                     {

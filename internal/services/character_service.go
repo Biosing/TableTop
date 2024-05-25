@@ -1,17 +1,19 @@
 package services
 
 import (
+	"context"
+
 	"table_top/internal/dtos/requests/characters"
 	"table_top/internal/models"
 	"table_top/internal/repositories"
 )
 
 type CharacterService interface {
-	CreateCharacter(character *characters.CreateRequest) (*models.Character, error)
-	DeleteCharacter(id string) error
-	GetCharacterByID(id string) (*models.Character, error)
-	ListCharacters() ([]*models.Character, error)
-	UpdateCharacter(character *characters.UpdateRequest) (*models.Character, error)
+	CreateCharacter(ctx context.Context, character *characters.CreateRequest) (*models.Character, error)
+	DeleteCharacter(ctx context.Context, id string) error
+	GetCharacterByID(ctx context.Context, id string) (*models.Character, error)
+	ListCharacters(ctx context.Context) ([]*models.Character, error)
+	UpdateCharacter(ctx context.Context, character *characters.UpdateRequest) (*models.Character, error)
 }
 
 type characterService struct {
@@ -22,7 +24,7 @@ func NewCharacterService(repo repositories.CharacterRepository) CharacterService
 	return &characterService{repo: repo}
 }
 
-func (s *characterService) CreateCharacter(character *characters.CreateRequest) (*models.Character, error) {
+func (s *characterService) CreateCharacter(ctx context.Context, character *characters.CreateRequest) (*models.Character, error) {
 	repoCharacter := &models.Character{
 		Name:         character.Name,
 		Class:        character.Class,
@@ -33,27 +35,27 @@ func (s *characterService) CreateCharacter(character *characters.CreateRequest) 
 		BeginningWay: character.BeginningWay,
 	}
 
-	if err := s.repo.Create(repoCharacter); err != nil {
+	if err := s.repo.Create(ctx, repoCharacter); err != nil {
 		return nil, err
 	}
 
 	return repoCharacter, nil
 }
 
-func (s *characterService) DeleteCharacter(id string) error {
-	return s.repo.Delete(id)
+func (s *characterService) DeleteCharacter(ctx context.Context, id string) error {
+	return s.repo.Delete(ctx, id)
 }
 
-func (s *characterService) GetCharacterByID(id string) (*models.Character, error) {
-	return s.repo.GetByID(id)
+func (s *characterService) GetCharacterByID(ctx context.Context, id string) (*models.Character, error) {
+	return s.repo.GetByID(ctx, id)
 }
 
-func (s *characterService) ListCharacters() ([]*models.Character, error) {
-	return s.repo.List()
+func (s *characterService) ListCharacters(ctx context.Context) ([]*models.Character, error) {
+	return s.repo.List(ctx)
 }
 
-func (s *characterService) UpdateCharacter(request *characters.UpdateRequest) (*models.Character, error) {
-	character, err := s.repo.GetByID(request.ID)
+func (s *characterService) UpdateCharacter(ctx context.Context, request *characters.UpdateRequest) (*models.Character, error) {
+	character, err := s.repo.GetByID(ctx, request.ID)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +68,7 @@ func (s *characterService) UpdateCharacter(request *characters.UpdateRequest) (*
 	character.Description = request.Description
 	character.BeginningWay = request.BeginningWay
 
-	if err := s.repo.Update(character); err != nil {
+	if err := s.repo.Update(ctx, character); err != nil {
 		return nil, err
 	}
 

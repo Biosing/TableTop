@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"os"
 
 	"table_top/internal/app"
@@ -21,8 +20,6 @@ func main() {
 		env = "dev"
 	}
 
-	router := app.InitApp(env)
+	app.Run(env)
 
-	log.Println("Application started successfully on :8080")
-	router.Run(":8080")
 }

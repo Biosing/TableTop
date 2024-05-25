@@ -15,6 +15,9 @@
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Characters"
+                ],
                 "summary": "List all characters",
                 "responses": {
                     "200": {
@@ -35,6 +38,9 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Characters"
                 ],
                 "summary": "Update a character",
                 "parameters": [
@@ -65,6 +71,9 @@
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Characters"
+                ],
                 "summary": "Create a new character",
                 "parameters": [
                     {
@@ -93,6 +102,9 @@
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Characters"
+                ],
                 "summary": "Get a character by ID",
                 "parameters": [
                     {
@@ -114,6 +126,9 @@
             },
             "delete": {
                 "description": "Delete a character by ID",
+                "tags": [
+                    "Characters"
+                ],
                 "summary": "Delete a character by ID",
                 "parameters": [
                     {

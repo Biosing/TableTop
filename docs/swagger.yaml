@@ -75,6 +75,8 @@ paths:
               $ref: '#/definitions/models.Character'
             type: array
       summary: List all characters
+      tags:
+      - Characters
     post:
       consumes:
       - application/json
@@ -94,6 +96,8 @@ paths:
           schema:
             $ref: '#/definitions/models.Character'
       summary: Create a new character
+      tags:
+      - Characters
     put:
       consumes:
       - application/json
@@ -113,6 +117,8 @@ paths:
           schema:
             $ref: '#/definitions/models.Character'
       summary: Update a character
+      tags:
+      - Characters
   /characters/{id}:
     delete:
       description: Delete a character by ID
@@ -126,6 +132,8 @@ paths:
         "204":
           description: No Content
       summary: Delete a character by ID
+      tags:
+      - Characters
     get:
       description: Get a character by ID
       parameters:
@@ -142,4 +150,6 @@ paths:
           schema:
             $ref: '#/definitions/models.Character'
       summary: Get a character by ID
+      tags:
+      - Characters
 swagger: "2.0"

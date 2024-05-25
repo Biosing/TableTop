@@ -1,17 +1,19 @@
 package repositories
 
 import (
-	"gorm.io/gorm"
+	"context"
 
 	"table_top/internal/models"
+
+	"gorm.io/gorm"
 )
 
 type CharacterRepository interface {
-	Create(character *models.Character) error
-	Delete(id string) error
-	GetByID(id string) (*models.Character, error)
-	List() ([]*models.Character, error)
-	Update(character *models.Character) error
+	Create(ctx context.Context, character *models.Character) error
+	Delete(ctx context.Context, id string) error
+	GetByID(ctx context.Context, id string) (*models.Character, error)
+	List(ctx context.Context) ([]*models.Character, error)
+	Update(ctx context.Context, character *models.Character) error
 }
 
 type characterRepository struct {
@@ -22,30 +24,30 @@ func NewCharacterRepository(db *gorm.DB) CharacterRepository {
 	return &characterRepository{db: db}
 }
 
-func (r *characterRepository) Create(character *models.Character) error {
-	return r.db.Create(character).Error
+func (r *characterRepository) Create(ctx context.Context, character *models.Character) error {
+	return r.db.WithContext(ctx).Create(character).Error
 }
 
-func (r *characterRepository) Delete(id string) error {
-	return r.db.Delete(&models.Character{}, "id = ?", id).Error
+func (r *characterRepository) Delete(ctx context.Context, id string) error {
+	return r.db.WithContext(ctx).Delete(&models.Character{}, "id = ?", id).Error
 }
 
-func (r *characterRepository) GetByID(id string) (*models.Character, error) {
+func (r *characterRepository) GetByID(ctx context.Context, id string) (*models.Character, error) {
 	var character models.Character
-	if err := r.db.First(&character, "id = ?", id).Error; err != nil {
+	if err := r.db.WithContext(ctx).First(&character, "id = ?", id).Error; err != nil {
 		return nil, err
 	}
 	return &character, nil
 }
 
-func (r *characterRepository) List() ([]*models.Character, error) {
+func (r *characterRepository) List(ctx context.Context) ([]*models.Character, error) {
 	var characters []*models.Character
-	if err := r.db.Find(&characters).Error; err != nil {
+	if err := r.db.WithContext(ctx).Find(&characters).Error; err != nil {
 		return nil, err
 	}
 	return characters, nil
 }
 
-func (r *characterRepository) Update(character *models.Character) error {
-	return r.db.Save(character).Error
+func (r *characterRepository) Update(ctx context.Context, character *models.Character) error {
+	return r.db.WithContext(ctx).Save(character).Error
 }

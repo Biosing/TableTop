@@ -1,6 +1,12 @@
 package app
 
 import (
+	"context"
+	"log"
+	"os"
+	"os/signal"
+	"syscall"
+
 	"table_top/internal/configs"
 	"table_top/internal/dbs"
 	"table_top/internal/handlers"
@@ -8,13 +14,21 @@ import (
 	"table_top/internal/repositories"
 	"table_top/internal/routers"
 	"table_top/internal/services"
-
-	"log"
-
-	"github.com/gin-gonic/gin"
 )
 
-func InitApp(env string) *gin.Engine {
+func Run(env string) {
+	// Создание основного контекста с отменой
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	// Настройка для перехвата сигналов завершения
+	go func() {
+		sig := make(chan os.Signal, 1)
+		signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
+		<-sig
+		cancel()
+	}()
+
 	cfg := configs.LoadConfig(env)
 	database, err := dbs.Connect(cfg)
 	if err != nil {
@@ -29,7 +43,10 @@ func InitApp(env string) *gin.Engine {
 	services := services.InitServices(repos)
 	handlers.InitHandlers(services)
 
-	router := routers.InitRouter()
+	router := routers.InitRouter(ctx)
 
-	return router
+	log.Println("Application started successfully on :8080")
+	if err := router.Run(":8080"); err != nil {
+		log.Fatalf("Could not run server: %v", err)
+	}
 }
