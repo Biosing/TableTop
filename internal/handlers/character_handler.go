@@ -88,12 +88,12 @@ func (h *CharacterHandler) GetCharacter(c *gin.Context) {
 // @Router /characters [get]
 func (h *CharacterHandler) ListCharacters(c *gin.Context) {
 	ctx := c.Request.Context()
-	characters, err := h.service.ListCharacters(ctx)
+	char, err := h.service.ListCharacters(ctx)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, characters)
+	c.JSON(http.StatusOK, char)
 }
 
 // UpdateCharacter godoc

@@ -40,8 +40,8 @@ func Run(env string) {
 	}
 
 	repos := repositories.InitRepositories(database)
-	services := services.InitServices(repos)
-	handlers.InitHandlers(services)
+	svc := services.InitServices(repos)
+	handlers.InitHandlers(svc)
 
 	router := routers.InitRouter(ctx)
 
