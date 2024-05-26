@@ -36,6 +36,97 @@ definitions:
       sex:
         type: string
     type: object
+  enemies.CreateRequest:
+    properties:
+      class:
+        example: Warrior
+        type: string
+      description:
+        example: A small but fierce warrior
+        type: string
+      enemy_moves:
+        items:
+          $ref: '#/definitions/enemies.EnemyMoves'
+        type: array
+      experience:
+        example: 10
+        type: integer
+      hp:
+        example: 100
+        type: integer
+      level:
+        example: 1
+        type: integer
+      name:
+        example: Goblin
+        type: string
+      quantity_deck:
+        example: 2
+        type: integer
+    type: object
+  enemies.EnemyMoves:
+    properties:
+      description:
+        example: Close attack
+        type: string
+      range_from:
+        example: 1
+        type: integer
+      range_to:
+        example: 10
+        type: integer
+    type: object
+  enemies.UpdateRequest:
+    properties:
+      class:
+        type: string
+      description:
+        type: string
+      experience:
+        type: integer
+      hp:
+        type: integer
+      level:
+        type: integer
+      name:
+        type: string
+      quantity_deck:
+        type: integer
+    type: object
+  enemy_moves.CreateRequest:
+    properties:
+      description:
+        example: Close attack
+        type: string
+      range_from:
+        example: 1
+        type: integer
+      range_to:
+        example: 10
+        type: integer
+    type: object
+  enemy_moves.UpdateRequest:
+    properties:
+      description:
+        type: string
+      range_from:
+        type: integer
+      range_to:
+        type: integer
+    type: object
+  locations.CreateRequest:
+    properties:
+      danger_level:
+        type: integer
+      description:
+        type: string
+      level:
+        type: integer
+      monsters_count:
+        type: integer
+      name:
+        type: string
+    type: object
   models.Character:
     properties:
       age:
@@ -53,6 +144,67 @@ definitions:
       race:
         type: string
       sex:
+        type: string
+    type: object
+  models.Enemy:
+    properties:
+      class:
+        example: Warrior
+        type: string
+      description:
+        example: A small but fierce warrior
+        type: string
+      enemy_moves:
+        items:
+          $ref: '#/definitions/models.EnemyMove'
+        type: array
+      experience:
+        example: 10
+        type: integer
+      hp:
+        example: 100
+        type: integer
+      id:
+        type: string
+      level:
+        example: 1
+        type: integer
+      name:
+        example: Goblin
+        type: string
+      quantity_deck:
+        example: 2
+        type: integer
+    type: object
+  models.EnemyMove:
+    properties:
+      description:
+        example: Slash attack
+        type: string
+      enemy_id:
+        type: string
+      id:
+        type: string
+      range_from:
+        example: 1
+        type: integer
+      range_to:
+        example: 3
+        type: integer
+    type: object
+  models.Location:
+    properties:
+      danger_level:
+        type: integer
+      description:
+        type: string
+      id:
+        type: string
+      level:
+        type: integer
+      monsters_count:
+        type: integer
+      name:
         type: string
     type: object
 host: localhost:8080
@@ -152,4 +304,290 @@ paths:
       summary: Get a character by ID
       tags:
       - Characters
+  /enemies:
+    get:
+      description: List all enemies
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Enemy'
+            type: array
+      summary: List all enemies
+      tags:
+      - Enemies
+    post:
+      consumes:
+      - application/json
+      description: Create a new enemy with enemy moves
+      parameters:
+      - description: Enemy
+        in: body
+        name: enemy
+        required: true
+        schema:
+          $ref: '#/definitions/enemies.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Enemy'
+      summary: Create a new enemy
+      tags:
+      - Enemies
+  /enemies/{id}:
+    delete:
+      description: Delete an enemy by ID
+      parameters:
+      - description: Enemy ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+      summary: Delete an enemy by ID
+      tags:
+      - Enemies
+    get:
+      description: Get an enemy by ID
+      parameters:
+      - description: Enemy ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Enemy'
+      summary: Get an enemy by ID
+      tags:
+      - Enemies
+    put:
+      consumes:
+      - application/json
+      description: Update an existing enemy
+      parameters:
+      - description: Enemy ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Enemy
+        in: body
+        name: enemy
+        required: true
+        schema:
+          $ref: '#/definitions/enemies.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Enemy'
+      summary: Update an existing enemy
+      tags:
+      - Enemies
+  /enemy_moves:
+    get:
+      description: List all enemy moves
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.EnemyMove'
+            type: array
+      summary: List all enemy moves
+      tags:
+      - EnemyMoves
+  /enemy_moves/{enemyId}:
+    post:
+      consumes:
+      - application/json
+      description: Create a new enemy move
+      parameters:
+      - description: Enemy ID
+        in: path
+        name: enemyId
+        required: true
+        type: string
+      - description: EnemyMove
+        in: body
+        name: enemyMove
+        required: true
+        schema:
+          $ref: '#/definitions/enemy_moves.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.EnemyMove'
+      summary: Create a new enemy move
+      tags:
+      - EnemyMoves
+  /enemy_moves/{id}:
+    delete:
+      description: Delete an enemy move by ID
+      parameters:
+      - description: EnemyMove ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+      summary: Delete an enemy move by ID
+      tags:
+      - EnemyMoves
+    get:
+      description: Get an enemy move by ID
+      parameters:
+      - description: EnemyMove ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.EnemyMove'
+      summary: Get an enemy move by ID
+      tags:
+      - EnemyMoves
+    put:
+      consumes:
+      - application/json
+      description: Update an existing enemy move
+      parameters:
+      - description: EnemyMove ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: EnemyMove
+        in: body
+        name: enemyMove
+        required: true
+        schema:
+          $ref: '#/definitions/enemy_moves.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.EnemyMove'
+      summary: Update an existing enemy move
+      tags:
+      - EnemyMoves
+  /locations:
+    get:
+      description: List all locations
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Location'
+            type: array
+      summary: List all locations
+      tags:
+      - Locations
+    post:
+      consumes:
+      - application/json
+      description: Create a new location
+      parameters:
+      - description: Location
+        in: body
+        name: location
+        required: true
+        schema:
+          $ref: '#/definitions/locations.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Location'
+      summary: Create a new location
+      tags:
+      - Locations
+    put:
+      consumes:
+      - application/json
+      description: Update a location
+      parameters:
+      - description: Location
+        in: body
+        name: location
+        required: true
+        schema:
+          $ref: '#/definitions/models.Location'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Location'
+      summary: Update a location
+      tags:
+      - Locations
+  /locations/{id}:
+    delete:
+      description: Delete a location by ID
+      parameters:
+      - description: Location ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+      summary: Delete a location by ID
+      tags:
+      - Locations
+    get:
+      description: Get a location by ID
+      parameters:
+      - description: Location ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Location'
+      summary: Get a location by ID
+      tags:
+      - Locations
 swagger: "2.0"

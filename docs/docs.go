@@ -151,6 +151,440 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/enemies": {
+            "get": {
+                "description": "List all enemies",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Enemies"
+                ],
+                "summary": "List all enemies",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Enemy"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new enemy with enemy moves",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Enemies"
+                ],
+                "summary": "Create a new enemy",
+                "parameters": [
+                    {
+                        "description": "Enemy",
+                        "name": "enemy",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/enemies.CreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Enemy"
+                        }
+                    }
+                }
+            }
+        },
+        "/enemies/{id}": {
+            "get": {
+                "description": "Get an enemy by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Enemies"
+                ],
+                "summary": "Get an enemy by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Enemy ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Enemy"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update an existing enemy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Enemies"
+                ],
+                "summary": "Update an existing enemy",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Enemy ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Enemy",
+                        "name": "enemy",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/enemies.UpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Enemy"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete an enemy by ID",
+                "tags": [
+                    "Enemies"
+                ],
+                "summary": "Delete an enemy by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Enemy ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/enemy_moves": {
+            "get": {
+                "description": "List all enemy moves",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "EnemyMoves"
+                ],
+                "summary": "List all enemy moves",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.EnemyMove"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/enemy_moves/{enemyId}": {
+            "post": {
+                "description": "Create a new enemy move",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "EnemyMoves"
+                ],
+                "summary": "Create a new enemy move",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Enemy ID",
+                        "name": "enemyId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "EnemyMove",
+                        "name": "enemyMove",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/enemy_moves.CreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.EnemyMove"
+                        }
+                    }
+                }
+            }
+        },
+        "/enemy_moves/{id}": {
+            "get": {
+                "description": "Get an enemy move by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "EnemyMoves"
+                ],
+                "summary": "Get an enemy move by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "EnemyMove ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.EnemyMove"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update an existing enemy move",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "EnemyMoves"
+                ],
+                "summary": "Update an existing enemy move",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "EnemyMove ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "EnemyMove",
+                        "name": "enemyMove",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/enemy_moves.UpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.EnemyMove"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete an enemy move by ID",
+                "tags": [
+                    "EnemyMoves"
+                ],
+                "summary": "Delete an enemy move by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "EnemyMove ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/locations": {
+            "get": {
+                "description": "List all locations",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "List all locations",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Location"
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a location",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Update a location",
+                "parameters": [
+                    {
+                        "description": "Location",
+                        "name": "location",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Location"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Location"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new location",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Create a new location",
+                "parameters": [
+                    {
+                        "description": "Location",
+                        "name": "location",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/locations.CreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Location"
+                        }
+                    }
+                }
+            }
+        },
+        "/locations/{id}": {
+            "get": {
+                "description": "Get a location by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Get a location by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Location ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Location"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a location by ID",
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Delete a location by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Location ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -209,6 +643,139 @@ const docTemplate = `{
                 }
             }
         },
+        "enemies.CreateRequest": {
+            "type": "object",
+            "properties": {
+                "class": {
+                    "type": "string",
+                    "example": "Warrior"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "A small but fierce warrior"
+                },
+                "enemy_moves": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/enemies.EnemyMoves"
+                    }
+                },
+                "experience": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "hp": {
+                    "type": "integer",
+                    "example": 100
+                },
+                "level": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Goblin"
+                },
+                "quantity_deck": {
+                    "type": "integer",
+                    "example": 2
+                }
+            }
+        },
+        "enemies.EnemyMoves": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "example": "Close attack"
+                },
+                "range_from": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "range_to": {
+                    "type": "integer",
+                    "example": 10
+                }
+            }
+        },
+        "enemies.UpdateRequest": {
+            "type": "object",
+            "properties": {
+                "class": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "experience": {
+                    "type": "integer"
+                },
+                "hp": {
+                    "type": "integer"
+                },
+                "level": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "quantity_deck": {
+                    "type": "integer"
+                }
+            }
+        },
+        "enemy_moves.CreateRequest": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "example": "Close attack"
+                },
+                "range_from": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "range_to": {
+                    "type": "integer",
+                    "example": 10
+                }
+            }
+        },
+        "enemy_moves.UpdateRequest": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "range_from": {
+                    "type": "integer"
+                },
+                "range_to": {
+                    "type": "integer"
+                }
+            }
+        },
+        "locations.CreateRequest": {
+            "type": "object",
+            "properties": {
+                "danger_level": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "level": {
+                    "type": "integer"
+                },
+                "monsters_count": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
         "models.Character": {
             "type": "object",
             "properties": {
@@ -234,6 +801,94 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "sex": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Enemy": {
+            "type": "object",
+            "properties": {
+                "class": {
+                    "type": "string",
+                    "example": "Warrior"
+                },
+                "description": {
+                    "type": "string",
+                    "example": "A small but fierce warrior"
+                },
+                "enemy_moves": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.EnemyMove"
+                    }
+                },
+                "experience": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "hp": {
+                    "type": "integer",
+                    "example": 100
+                },
+                "id": {
+                    "type": "string"
+                },
+                "level": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Goblin"
+                },
+                "quantity_deck": {
+                    "type": "integer",
+                    "example": 2
+                }
+            }
+        },
+        "models.EnemyMove": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "example": "Slash attack"
+                },
+                "enemy_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "range_from": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "range_to": {
+                    "type": "integer",
+                    "example": 3
+                }
+            }
+        },
+        "models.Location": {
+            "type": "object",
+            "properties": {
+                "danger_level": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "level": {
+                    "type": "integer"
+                },
+                "monsters_count": {
+                    "type": "integer"
+                },
+                "name": {
                     "type": "string"
                 }
             }

@@ -22,7 +22,27 @@ func Migrate(db *gorm.DB) error {
 				return tx.Migrator().DropTable("characters")
 			},
 		},
-		// Добавьте новые миграции здесь
+		{
+			ID: "202405251830",
+			Migrate: func(tx *gorm.DB) error {
+				return tx.AutoMigrate(&models.Location{})
+			},
+			Rollback: func(tx *gorm.DB) error {
+				return tx.Migrator().DropTable("locations")
+			},
+		},
+		{
+			ID: "202405261522",
+			Migrate: func(tx *gorm.DB) error {
+				return tx.AutoMigrate(&models.Enemy{}, &models.EnemyMove{})
+			},
+			Rollback: func(tx *gorm.DB) error {
+				if err := tx.Migrator().DropTable("enemy_moves"); err != nil {
+					return err
+				}
+				return tx.Migrator().DropTable("enemies")
+			},
+		},
 	})
 
 	return m.Migrate()
