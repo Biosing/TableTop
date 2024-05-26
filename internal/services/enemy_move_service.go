@@ -14,7 +14,7 @@ type EnemyMoveService interface {
 	CreateEnemyMove(ctx context.Context, enemyId uuid.UUID, enemyMove *enemymoves.CreateRequest) (*models.EnemyMove, error)
 	DeleteEnemyMove(ctx context.Context, id uuid.UUID) error
 	GetEnemyMoveByID(ctx context.Context, id uuid.UUID) (*models.EnemyMove, error)
-	ListEnemyMoves(ctx context.Context) ([]*models.EnemyMove, error)
+	ListEnemyMoves(ctx context.Context, enemyID uuid.UUID) ([]*models.EnemyMove, error)
 	UpdateEnemyMove(ctx context.Context, id uuid.UUID, enemyMove *enemymoves.UpdateRequest) (*models.EnemyMove, error)
 }
 
@@ -49,7 +49,10 @@ func (s *enemyMoveService) GetEnemyMoveByID(ctx context.Context, id uuid.UUID) (
 	return s.repo.GetByID(ctx, id)
 }
 
-func (s *enemyMoveService) ListEnemyMoves(ctx context.Context) ([]*models.EnemyMove, error) {
+func (s *enemyMoveService) ListEnemyMoves(ctx context.Context, enemyID uuid.UUID) ([]*models.EnemyMove, error) {
+	if enemyID != uuid.Nil {
+		return s.repo.FindByEnemyID(ctx, enemyID)
+	}
 	return s.repo.List(ctx)
 }
 

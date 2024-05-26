@@ -138,15 +138,28 @@ func (h *EnemyMoveHandler) DeleteEnemyMove(c *gin.Context) {
 
 // ListEnemyMoves godoc
 // @Summary List all enemy moves
-// @Description List all enemy moves
+// @Description List all enemy moves, optionally filtered by EnemyID
 // @Tags EnemyMoves
 // @Produce  json
+// @Param EnemyID query string false "Enemy ID"
 // @Success 200 {array} models.EnemyMove
 // @Router /enemy_moves [get]
 func (h *EnemyMoveHandler) ListEnemyMoves(c *gin.Context) {
 	ctx := c.Request.Context()
+	enemyIDStr := c.Query("EnemyID")
 
-	enemyMoves, err := h.service.ListEnemyMoves(ctx)
+	var enemyID uuid.UUID
+	var err error
+
+	if enemyIDStr != "" {
+		enemyID, err = uuid.Parse(enemyIDStr)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid EnemyID"})
+			return
+		}
+	}
+
+	enemyMoves, err := h.service.ListEnemyMoves(ctx, enemyID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

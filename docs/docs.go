@@ -298,7 +298,7 @@ const docTemplate = `{
         },
         "/enemy_moves": {
             "get": {
-                "description": "List all enemy moves",
+                "description": "List all enemy moves, optionally filtered by EnemyID",
                 "produces": [
                     "application/json"
                 ],
@@ -306,6 +306,14 @@ const docTemplate = `{
                     "EnemyMoves"
                 ],
                 "summary": "List all enemy moves",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Enemy ID",
+                        "name": "EnemyID",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",

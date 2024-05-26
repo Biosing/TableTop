@@ -401,7 +401,12 @@ paths:
       - Enemies
   /enemy_moves:
     get:
-      description: List all enemy moves
+      description: List all enemy moves, optionally filtered by EnemyID
+      parameters:
+      - description: Enemy ID
+        in: query
+        name: EnemyID
+        type: string
       produces:
       - application/json
       responses:

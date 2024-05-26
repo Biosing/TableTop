@@ -14,6 +14,7 @@ type EnemyMoveRepository interface {
 	Delete(ctx context.Context, id uuid.UUID) error
 	GetByID(ctx context.Context, id uuid.UUID) (*models.EnemyMove, error)
 	List(ctx context.Context) ([]*models.EnemyMove, error)
+	FindByEnemyID(ctx context.Context, enemyID uuid.UUID) ([]*models.EnemyMove, error)
 	Update(ctx context.Context, enemyMove *models.EnemyMove) error
 }
 
@@ -48,6 +49,14 @@ func (r *enemyMoveRepository) Delete(ctx context.Context, id uuid.UUID) error {
 func (r *enemyMoveRepository) List(ctx context.Context) ([]*models.EnemyMove, error) {
 	var enemyMoves []*models.EnemyMove
 	if err := r.db.WithContext(ctx).Find(&enemyMoves).Error; err != nil {
+		return nil, err
+	}
+	return enemyMoves, nil
+}
+
+func (r *enemyMoveRepository) FindByEnemyID(ctx context.Context, enemyID uuid.UUID) ([]*models.EnemyMove, error) {
+	var enemyMoves []*models.EnemyMove
+	if err := r.db.WithContext(ctx).Where("enemy_id = ?", enemyID).Find(&enemyMoves).Error; err != nil {
 		return nil, err
 	}
 	return enemyMoves, nil
