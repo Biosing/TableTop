@@ -31,38 +31,6 @@
                     }
                 }
             },
-            "put": {
-                "description": "Update a character",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Characters"
-                ],
-                "summary": "Update a character",
-                "parameters": [
-                    {
-                        "description": "Character",
-                        "name": "character",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/characters.UpdateRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.Character"
-                        }
-                    }
-                }
-            },
             "post": {
                 "description": "Create a new character",
                 "consumes": [
@@ -113,6 +81,45 @@
                         "name": "id",
                         "in": "path",
                         "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Character"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a character",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Characters"
+                ],
+                "summary": "Update a character",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Enemy ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Character",
+                        "name": "character",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/characters.UpdateRequest"
+                        }
                     }
                 ],
                 "responses": {
@@ -473,38 +480,6 @@
                     }
                 }
             },
-            "put": {
-                "description": "Update a location",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Locations"
-                ],
-                "summary": "Update a location",
-                "parameters": [
-                    {
-                        "description": "Location",
-                        "name": "location",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.Location"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.Location"
-                        }
-                    }
-                }
-            },
             "post": {
                 "description": "Create a new location",
                 "consumes": [
@@ -555,6 +530,45 @@
                         "name": "id",
                         "in": "path",
                         "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Location"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a location",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Update a location",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Location ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Location",
+                        "name": "location",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/locations.UpdateRequest"
+                        }
                     }
                 ],
                 "responses": {
@@ -629,9 +643,6 @@
                     "type": "string"
                 },
                 "description": {
-                    "type": "string"
-                },
-                "id": {
                     "type": "string"
                 },
                 "name": {
@@ -759,6 +770,26 @@
             }
         },
         "locations.CreateRequest": {
+            "type": "object",
+            "properties": {
+                "danger_level": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "level": {
+                    "type": "integer"
+                },
+                "monsters_count": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "locations.UpdateRequest": {
             "type": "object",
             "properties": {
                 "danger_level": {

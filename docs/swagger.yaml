@@ -27,8 +27,6 @@ definitions:
         type: string
       description:
         type: string
-      id:
-        type: string
       name:
         type: string
       race:
@@ -115,6 +113,19 @@ definitions:
         type: integer
     type: object
   locations.CreateRequest:
+    properties:
+      danger_level:
+        type: integer
+      description:
+        type: string
+      level:
+        type: integer
+      monsters_count:
+        type: integer
+      name:
+        type: string
+    type: object
+  locations.UpdateRequest:
     properties:
       danger_level:
         type: integer
@@ -250,27 +261,6 @@ paths:
       summary: Create a new character
       tags:
       - Characters
-    put:
-      consumes:
-      - application/json
-      description: Update a character
-      parameters:
-      - description: Character
-        in: body
-        name: character
-        required: true
-        schema:
-          $ref: '#/definitions/characters.UpdateRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Character'
-      summary: Update a character
-      tags:
-      - Characters
   /characters/{id}:
     delete:
       description: Delete a character by ID
@@ -302,6 +292,32 @@ paths:
           schema:
             $ref: '#/definitions/models.Character'
       summary: Get a character by ID
+      tags:
+      - Characters
+    put:
+      consumes:
+      - application/json
+      description: Update a character
+      parameters:
+      - description: Enemy ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Character
+        in: body
+        name: character
+        required: true
+        schema:
+          $ref: '#/definitions/characters.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Character'
+      summary: Update a character
       tags:
       - Characters
   /enemies:
@@ -541,27 +557,6 @@ paths:
       summary: Create a new location
       tags:
       - Locations
-    put:
-      consumes:
-      - application/json
-      description: Update a location
-      parameters:
-      - description: Location
-        in: body
-        name: location
-        required: true
-        schema:
-          $ref: '#/definitions/models.Location'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Location'
-      summary: Update a location
-      tags:
-      - Locations
   /locations/{id}:
     delete:
       description: Delete a location by ID
@@ -593,6 +588,32 @@ paths:
           schema:
             $ref: '#/definitions/models.Location'
       summary: Get a location by ID
+      tags:
+      - Locations
+    put:
+      consumes:
+      - application/json
+      description: Update a location
+      parameters:
+      - description: Location ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Location
+        in: body
+        name: location
+        required: true
+        schema:
+          $ref: '#/definitions/locations.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Location'
+      summary: Update a location
       tags:
       - Locations
 swagger: "2.0"

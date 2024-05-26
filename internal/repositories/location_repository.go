@@ -3,6 +3,8 @@ package repositories
 import (
 	"context"
 
+	"github.com/google/uuid"
+
 	"table_top/internal/models"
 
 	"gorm.io/gorm"
@@ -10,9 +12,9 @@ import (
 
 type LocationRepository interface {
 	Create(ctx context.Context, location *models.Location) error
-	GetByID(ctx context.Context, id string) (*models.Location, error)
+	GetByID(ctx context.Context, id uuid.UUID) (*models.Location, error)
 	List(ctx context.Context) ([]*models.Location, error)
-	Delete(ctx context.Context, id string) error
+	Delete(ctx context.Context, id uuid.UUID) error
 	Update(ctx context.Context, location *models.Location) error
 }
 
@@ -28,7 +30,7 @@ func (r *locationRepository) Create(ctx context.Context, location *models.Locati
 	return r.db.WithContext(ctx).Create(location).Error
 }
 
-func (r *locationRepository) GetByID(ctx context.Context, id string) (*models.Location, error) {
+func (r *locationRepository) GetByID(ctx context.Context, id uuid.UUID) (*models.Location, error) {
 	var location models.Location
 	if err := r.db.WithContext(ctx).First(&location, "id = ?", id).Error; err != nil {
 		return nil, err
@@ -44,7 +46,7 @@ func (r *locationRepository) List(ctx context.Context) ([]*models.Location, erro
 	return locations, nil
 }
 
-func (r *locationRepository) Delete(ctx context.Context, id string) error {
+func (r *locationRepository) Delete(ctx context.Context, id uuid.UUID) error {
 	return r.db.WithContext(ctx).Delete(&models.Location{}, "id = ?", id).Error
 }
 

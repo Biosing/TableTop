@@ -3,6 +3,8 @@ package services
 import (
 	"context"
 
+	"github.com/google/uuid"
+
 	"table_top/internal/dtos/requests/locations"
 	"table_top/internal/models"
 	"table_top/internal/repositories"
@@ -10,10 +12,10 @@ import (
 
 type LocationService interface {
 	CreateLocation(ctx context.Context, location *locations.CreateRequest) (*models.Location, error)
-	GetLocationByID(ctx context.Context, id string) (*models.Location, error)
+	GetLocationByID(ctx context.Context, id uuid.UUID) (*models.Location, error)
 	ListLocations(ctx context.Context) ([]*models.Location, error)
-	DeleteLocation(ctx context.Context, id string) error
-	UpdateLocation(ctx context.Context, location *models.Location) (*models.Location, error)
+	DeleteLocation(ctx context.Context, id uuid.UUID) error
+	UpdateLocation(ctx context.Context, id uuid.UUID, location *locations.UpdateRequest) (*models.Location, error)
 }
 
 type locationService struct {
@@ -40,7 +42,7 @@ func (s *locationService) CreateLocation(ctx context.Context, location *location
 	return locationRepo, nil
 }
 
-func (s *locationService) GetLocationByID(ctx context.Context, id string) (*models.Location, error) {
+func (s *locationService) GetLocationByID(ctx context.Context, id uuid.UUID) (*models.Location, error) {
 	return s.repo.GetByID(ctx, id)
 }
 
@@ -48,13 +50,26 @@ func (s *locationService) ListLocations(ctx context.Context) ([]*models.Location
 	return s.repo.List(ctx)
 }
 
-func (s *locationService) DeleteLocation(ctx context.Context, id string) error {
+func (s *locationService) DeleteLocation(ctx context.Context, id uuid.UUID) error {
 	return s.repo.Delete(ctx, id)
 }
 
-func (s *locationService) UpdateLocation(ctx context.Context, location *models.Location) (*models.Location, error) {
-	if err := s.repo.Update(ctx, location); err != nil {
+func (s *locationService) UpdateLocation(ctx context.Context, id uuid.UUID, req *locations.UpdateRequest) (*models.Location, error) {
+	loc, err := s.repo.GetByID(ctx, id)
+	if err != nil {
 		return nil, err
 	}
-	return location, nil
+
+	loc.ID = id
+	loc.Name = req.Name
+	loc.Level = req.Level
+	loc.DangerLevel = req.DangerLevel
+	loc.Description = req.Description
+	loc.MonstersCount = req.MonstersCount
+
+	if err := s.repo.Update(ctx, loc); err != nil {
+		return nil, err
+	}
+
+	return loc, nil
 }
