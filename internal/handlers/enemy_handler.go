@@ -138,11 +138,11 @@ func (h *EnemyHandler) DeleteEnemy(c *gin.Context) {
 func (h *EnemyHandler) ListEnemies(c *gin.Context) {
 	ctx := c.Request.Context()
 
-	enemies, err := h.service.ListEnemies(ctx)
+	enm, err := h.service.ListEnemies(ctx)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, enemies)
+	c.JSON(http.StatusOK, enm)
 }

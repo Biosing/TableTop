@@ -72,12 +72,12 @@ func (h *LocationHandler) GetLocation(c *gin.Context) {
 // @Router /locations [get]
 func (h *LocationHandler) ListLocations(c *gin.Context) {
 	ctx := c.Request.Context()
-	locations, err := h.service.ListLocations(ctx)
+	loc, err := h.service.ListLocations(ctx)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, locations)
+	c.JSON(http.StatusOK, loc)
 }
 
 // DeleteLocation godoc
