@@ -132,11 +132,11 @@ func (h *WeaponHandler) DeleteWeapon(c *gin.Context) {
 // @Success 200 {array} models.Weapon
 // @Router /weapons [get]
 func (h *WeaponHandler) ListWeapons(c *gin.Context) {
-	weapons, err := h.service.ListWeapons(c.Request.Context())
+	wpn, err := h.service.ListWeapons(c.Request.Context())
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, weapons)
+	c.JSON(http.StatusOK, wpn)
 }
