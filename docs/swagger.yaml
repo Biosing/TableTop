@@ -39,6 +39,9 @@ definitions:
       class:
         example: Warrior
         type: string
+      defense:
+        example: 2
+        type: integer
       description:
         example: A small but fierce warrior
         type: string
@@ -78,6 +81,8 @@ definitions:
     properties:
       class:
         type: string
+      defense:
+        type: integer
       description:
         type: string
       experience:
@@ -162,6 +167,9 @@ definitions:
       class:
         example: Warrior
         type: string
+      defense:
+        example: 2
+        type: integer
       description:
         example: A small but fierce warrior
         type: string
@@ -217,6 +225,93 @@ definitions:
         type: integer
       name:
         type: string
+    type: object
+  models.Weapon:
+    properties:
+      character_id:
+        type: string
+      count_cards:
+        type: integer
+      defense:
+        type: integer
+      id:
+        type: string
+      name:
+        type: string
+      weapon_combo:
+        items:
+          $ref: '#/definitions/models.WeaponCombo'
+        type: array
+    type: object
+  models.WeaponCombo:
+    properties:
+      combo_type:
+        type: integer
+      count:
+        type: integer
+      id:
+        type: string
+      order:
+        type: integer
+      weapon_id:
+        type: string
+    type: object
+  weapon_combos.CreateRequest:
+    properties:
+      combo_type:
+        type: integer
+      count:
+        type: integer
+      order:
+        type: integer
+      weapon_id:
+        type: string
+    type: object
+  weapon_combos.UpdateRequest:
+    properties:
+      combo_type:
+        type: integer
+      count:
+        type: integer
+      order:
+        type: integer
+      weapon_id:
+        type: string
+    type: object
+  weapons.CreateRequest:
+    properties:
+      character_id:
+        type: string
+      count_cards:
+        type: integer
+      defense:
+        type: integer
+      name:
+        type: string
+      weapon_combo:
+        items:
+          $ref: '#/definitions/weapons.WeaponCombo'
+        type: array
+    type: object
+  weapons.UpdateRequest:
+    properties:
+      character_id:
+        type: string
+      count_cards:
+        type: integer
+      defense:
+        type: integer
+      name:
+        type: string
+    type: object
+  weapons.WeaponCombo:
+    properties:
+      combo_type:
+        type: integer
+      count:
+        type: integer
+      order:
+        type: integer
     type: object
 host: localhost:8080
 info:
@@ -616,4 +711,194 @@ paths:
       summary: Update a location
       tags:
       - Locations
+  /weapon_combos:
+    get:
+      description: List all weapon combos
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.WeaponCombo'
+            type: array
+      summary: List all weapon combos
+      tags:
+      - WeaponCombos
+    post:
+      consumes:
+      - application/json
+      description: Create a new weapon combo
+      parameters:
+      - description: WeaponCombo
+        in: body
+        name: weaponCombo
+        required: true
+        schema:
+          $ref: '#/definitions/weapon_combos.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.WeaponCombo'
+      summary: Create a new weapon combo
+      tags:
+      - WeaponCombos
+  /weapon_combos/{id}:
+    delete:
+      description: Delete a weapon combo by ID
+      parameters:
+      - description: WeaponCombo ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+      summary: Delete a weapon combo by ID
+      tags:
+      - WeaponCombos
+    get:
+      description: Get a weapon combo by ID
+      parameters:
+      - description: WeaponCombo ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.WeaponCombo'
+      summary: Get a weapon combo by ID
+      tags:
+      - WeaponCombos
+    put:
+      consumes:
+      - application/json
+      description: Update a weapon combo
+      parameters:
+      - description: WeaponCombo ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: WeaponCombo
+        in: body
+        name: weaponCombo
+        required: true
+        schema:
+          $ref: '#/definitions/weapon_combos.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.WeaponCombo'
+      summary: Update a weapon combo
+      tags:
+      - WeaponCombos
+  /weapons:
+    get:
+      description: List all weapons
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Weapon'
+            type: array
+      summary: List all weapons
+      tags:
+      - Weapons
+    post:
+      consumes:
+      - application/json
+      description: Create a new weapon along with its combos
+      parameters:
+      - description: Weapon
+        in: body
+        name: weapon
+        required: true
+        schema:
+          $ref: '#/definitions/weapons.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Weapon'
+      summary: Create a new weapon
+      tags:
+      - Weapons
+  /weapons/{id}:
+    delete:
+      description: Delete a weapon by ID
+      parameters:
+      - description: Weapon ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+      summary: Delete a weapon by ID
+      tags:
+      - Weapons
+    get:
+      description: Get a weapon by ID
+      parameters:
+      - description: Weapon ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Weapon'
+      summary: Get a weapon by ID
+      tags:
+      - Weapons
+    put:
+      consumes:
+      - application/json
+      description: Update a weapon
+      parameters:
+      - description: Weapon ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Weapon
+        in: body
+        name: weapon
+        required: true
+        schema:
+          $ref: '#/definitions/weapons.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Weapon'
+      summary: Update a weapon
+      tags:
+      - Weapons
 swagger: "2.0"

@@ -8,6 +8,7 @@ type CreateRequest struct {
 	Hp           int          `json:"hp" example:"100"`
 	Experience   int          `json:"experience" example:"10"`
 	QuantityDeck int          `json:"quantity_deck" example:"2"`
+	Defense      int          `json:"defense" example:"2"`
 	EnemyMoves   []EnemyMoves `json:"enemy_moves"`
 }
 

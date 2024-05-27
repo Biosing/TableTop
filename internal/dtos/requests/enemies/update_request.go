@@ -8,4 +8,5 @@ type UpdateRequest struct {
 	Hp           int    `json:"hp"`
 	Experience   int    `json:"experience"`
 	QuantityDeck int    `json:"quantity_deck"`
+	Defense      int    `json:"defense"`
 }

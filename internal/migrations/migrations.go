@@ -43,6 +43,36 @@ func Migrate(db *gorm.DB) error {
 				return tx.Migrator().DropTable("enemies")
 			},
 		},
+		{
+			ID: "202405270014",
+			Migrate: func(tx *gorm.DB) error {
+				return tx.AutoMigrate(&models.Weapon{}, &models.WeaponCombo{})
+			},
+			Rollback: func(tx *gorm.DB) error {
+				if err := tx.Migrator().DropTable("weapon"); err != nil {
+					return err
+				}
+				return tx.Migrator().DropTable("weapon_combo")
+			},
+		},
+		{
+			ID: "202405270104",
+			Migrate: func(tx *gorm.DB) error {
+				return tx.AutoMigrate(&models.Weapon{}, &models.WeaponCombo{})
+			},
+			Rollback: func(tx *gorm.DB) error {
+				return tx.Migrator().DropTable("weapons", "weapon_combos")
+			},
+		},
+		{
+			ID: "202405272325",
+			Migrate: func(tx *gorm.DB) error {
+				return tx.AutoMigrate(&models.Enemy{})
+			},
+			Rollback: func(tx *gorm.DB) error {
+				return tx.Migrator().DropTable("enemy")
+			},
+		},
 	})
 
 	return m.Migrate()

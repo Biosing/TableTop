@@ -35,6 +35,7 @@ func (s *enemyService) CreateEnemy(ctx context.Context, req *enemies.CreateReque
 		Hp:           req.Hp,
 		Experience:   req.Experience,
 		QuantityDeck: req.QuantityDeck,
+		Defense:      req.Defense,
 	}
 
 	for _, move := range req.EnemyMoves {
@@ -66,6 +67,7 @@ func (s *enemyService) UpdateEnemy(ctx context.Context, id uuid.UUID, req *enemi
 	enemy.Hp = req.Hp
 	enemy.Experience = req.Experience
 	enemy.QuantityDeck = req.QuantityDeck
+	enemy.Defense = req.Defense
 
 	if err := s.repo.Update(ctx, enemy); err != nil {
 		return nil, err

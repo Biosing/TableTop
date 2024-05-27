@@ -601,6 +601,294 @@
                     }
                 }
             }
+        },
+        "/weapon_combos": {
+            "get": {
+                "description": "List all weapon combos",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "WeaponCombos"
+                ],
+                "summary": "List all weapon combos",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.WeaponCombo"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new weapon combo",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "WeaponCombos"
+                ],
+                "summary": "Create a new weapon combo",
+                "parameters": [
+                    {
+                        "description": "WeaponCombo",
+                        "name": "weaponCombo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/weapon_combos.CreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.WeaponCombo"
+                        }
+                    }
+                }
+            }
+        },
+        "/weapon_combos/{id}": {
+            "get": {
+                "description": "Get a weapon combo by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "WeaponCombos"
+                ],
+                "summary": "Get a weapon combo by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "WeaponCombo ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.WeaponCombo"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a weapon combo",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "WeaponCombos"
+                ],
+                "summary": "Update a weapon combo",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "WeaponCombo ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "WeaponCombo",
+                        "name": "weaponCombo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/weapon_combos.UpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.WeaponCombo"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a weapon combo by ID",
+                "tags": [
+                    "WeaponCombos"
+                ],
+                "summary": "Delete a weapon combo by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "WeaponCombo ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/weapons": {
+            "get": {
+                "description": "List all weapons",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Weapons"
+                ],
+                "summary": "List all weapons",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Weapon"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new weapon along with its combos",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Weapons"
+                ],
+                "summary": "Create a new weapon",
+                "parameters": [
+                    {
+                        "description": "Weapon",
+                        "name": "weapon",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/weapons.CreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Weapon"
+                        }
+                    }
+                }
+            }
+        },
+        "/weapons/{id}": {
+            "get": {
+                "description": "Get a weapon by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Weapons"
+                ],
+                "summary": "Get a weapon by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Weapon ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Weapon"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a weapon",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Weapons"
+                ],
+                "summary": "Update a weapon",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Weapon ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Weapon",
+                        "name": "weapon",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/weapons.UpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Weapon"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a weapon by ID",
+                "tags": [
+                    "Weapons"
+                ],
+                "summary": "Delete a weapon by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Weapon ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -663,6 +951,10 @@
                     "type": "string",
                     "example": "Warrior"
                 },
+                "defense": {
+                    "type": "integer",
+                    "example": 2
+                },
                 "description": {
                     "type": "string",
                     "example": "A small but fierce warrior"
@@ -717,6 +1009,9 @@
             "properties": {
                 "class": {
                     "type": "string"
+                },
+                "defense": {
+                    "type": "integer"
                 },
                 "description": {
                     "type": "string"
@@ -845,6 +1140,10 @@
                     "type": "string",
                     "example": "Warrior"
                 },
+                "defense": {
+                    "type": "integer",
+                    "example": 2
+                },
                 "description": {
                     "type": "string",
                     "example": "A small but fierce warrior"
@@ -923,6 +1222,140 @@
                 },
                 "name": {
                     "type": "string"
+                }
+            }
+        },
+        "models.Weapon": {
+            "type": "object",
+            "properties": {
+                "character_id": {
+                    "type": "string"
+                },
+                "count_cards": {
+                    "type": "integer"
+                },
+                "defense": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "weapon_combo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.WeaponCombo"
+                    }
+                }
+            }
+        },
+        "models.WeaponCombo": {
+            "type": "object",
+            "properties": {
+                "combo_type": {
+                    "type": "integer"
+                },
+                "count": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "order": {
+                    "type": "integer"
+                },
+                "weapon_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "weapon_combos.CreateRequest": {
+            "type": "object",
+            "properties": {
+                "combo_type": {
+                    "type": "integer"
+                },
+                "count": {
+                    "type": "integer"
+                },
+                "order": {
+                    "type": "integer"
+                },
+                "weapon_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "weapon_combos.UpdateRequest": {
+            "type": "object",
+            "properties": {
+                "combo_type": {
+                    "type": "integer"
+                },
+                "count": {
+                    "type": "integer"
+                },
+                "order": {
+                    "type": "integer"
+                },
+                "weapon_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "weapons.CreateRequest": {
+            "type": "object",
+            "properties": {
+                "character_id": {
+                    "type": "string"
+                },
+                "count_cards": {
+                    "type": "integer"
+                },
+                "defense": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "weapon_combo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/weapons.WeaponCombo"
+                    }
+                }
+            }
+        },
+        "weapons.UpdateRequest": {
+            "type": "object",
+            "properties": {
+                "character_id": {
+                    "type": "string"
+                },
+                "count_cards": {
+                    "type": "integer"
+                },
+                "defense": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "weapons.WeaponCombo": {
+            "type": "object",
+            "properties": {
+                "combo_type": {
+                    "type": "integer"
+                },
+                "count": {
+                    "type": "integer"
+                },
+                "order": {
+                    "type": "integer"
                 }
             }
         }

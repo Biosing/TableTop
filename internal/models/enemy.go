@@ -11,5 +11,6 @@ type Enemy struct {
 	Hp           int         `json:"hp" example:"100"`
 	Experience   int         `json:"experience" example:"10"`
 	QuantityDeck int         `json:"quantity_deck" example:"2"`
+	Defense      int         `json:"defense" example:"2"`
 	EnemyMoves   []EnemyMove `gorm:"foreignKey:EnemyID" json:"enemy_moves"`
 }

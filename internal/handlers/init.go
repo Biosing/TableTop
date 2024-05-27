@@ -5,10 +5,12 @@ import (
 )
 
 var (
-	characterHandler *CharacterHandler
-	locationHandler  *LocationHandler
-	enemyHandler     *EnemyHandler
-	enemyMoveHandler *EnemyMoveHandler
+	characterHandler   *CharacterHandler
+	locationHandler    *LocationHandler
+	enemyHandler       *EnemyHandler
+	enemyMoveHandler   *EnemyMoveHandler
+	weaponHandler      *WeaponHandler
+	weaponComboHandler *WeaponComboHandler
 )
 
 func InitHandlers(s services.Services) {
@@ -16,6 +18,8 @@ func InitHandlers(s services.Services) {
 	locationHandler = NewLocationHandler(s.LocationService)
 	enemyHandler = NewEnemyHandler(s.EnemyService)
 	enemyMoveHandler = NewEnemyMoveHandler(s.EnemyMoveService)
+	weaponHandler = NewWeaponHandler(s.WeaponService)
+	weaponComboHandler = NewWeaponComboHandler(s.WeaponComboService)
 }
 
 func GetCharacterHandler() *CharacterHandler {
@@ -32,4 +36,12 @@ func GetEnemyHandler() *EnemyHandler {
 
 func GetEnemyMoveHandler() *EnemyMoveHandler {
 	return enemyMoveHandler
+}
+
+func GetWeaponHandler() *WeaponHandler {
+	return weaponHandler
+}
+
+func GetWeaponComboHandler() *WeaponComboHandler {
+	return weaponComboHandler
 }
