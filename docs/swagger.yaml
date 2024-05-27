@@ -34,6 +34,96 @@ definitions:
       sex:
         type: string
     type: object
+  combo_cards.CreateRequest:
+    properties:
+      added_number_cells:
+        type: integer
+      character_id:
+        type: string
+      combo_card_type:
+        type: integer
+      damage_combo_cards:
+        items:
+          $ref: '#/definitions/combo_cards.DamageComboCard'
+        type: array
+      description:
+        type: string
+      name:
+        type: string
+      required_number_cells:
+        type: integer
+      special_effects:
+        items:
+          $ref: '#/definitions/combo_cards.SpecialEffect'
+        type: array
+      target_enemy_id:
+        type: string
+    type: object
+  combo_cards.DamageComboCard:
+    properties:
+      damage:
+        type: integer
+      damage_type:
+        type: integer
+      range_from:
+        type: integer
+      range_to:
+        type: integer
+    type: object
+  combo_cards.SpecialEffect:
+    properties:
+      damage:
+        type: integer
+      damage_type:
+        type: integer
+      description:
+        type: string
+      special_effect_type:
+        type: integer
+    type: object
+  combo_cards.UpdateRequest:
+    properties:
+      added_number_cells:
+        type: integer
+      character_id:
+        type: string
+      combo_card_type:
+        type: integer
+      description:
+        type: string
+      name:
+        type: string
+      required_number_cells:
+        type: integer
+      target_enemy_id:
+        type: string
+    type: object
+  damage_combo_cards.CreateRequest:
+    properties:
+      combo_card_id:
+        type: string
+      damage:
+        type: integer
+      damage_type:
+        type: integer
+      range_from:
+        type: integer
+      range_to:
+        type: integer
+    type: object
+  damage_combo_cards.UpdateRequest:
+    properties:
+      combo_card_id:
+        type: string
+      damage:
+        type: integer
+      damage_type:
+        type: integer
+      range_from:
+        type: integer
+      range_to:
+        type: integer
+    type: object
   enemies.CreateRequest:
     properties:
       class:
@@ -162,6 +252,50 @@ definitions:
       sex:
         type: string
     type: object
+  models.ComboCard:
+    properties:
+      added_number_cells:
+        type: integer
+      character_id:
+        type: string
+      combo_card_type:
+        type: integer
+      damage_combo_cards:
+        items:
+          $ref: '#/definitions/models.DamageComboCard'
+        type: array
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      required_number_cells:
+        type: integer
+      special_effects:
+        items:
+          $ref: '#/definitions/models.SpecialEffect'
+        type: array
+      target_enemy_id:
+        type: string
+    type: object
+  models.DamageComboCard:
+    properties:
+      combo_card_id:
+        type: string
+      damage:
+        type: integer
+      damage_type:
+        type: integer
+      id:
+        type: string
+      range_from:
+        example: 1
+        type: integer
+      range_to:
+        example: 3
+        type: integer
+    type: object
   models.Enemy:
     properties:
       class:
@@ -226,6 +360,21 @@ definitions:
       name:
         type: string
     type: object
+  models.SpecialEffect:
+    properties:
+      combo_card_id:
+        type: string
+      damage:
+        type: integer
+      damage_type:
+        type: integer
+      description:
+        type: string
+      id:
+        type: string
+      special_effect_type:
+        type: integer
+    type: object
   models.Weapon:
     properties:
       character_id:
@@ -255,6 +404,32 @@ definitions:
         type: integer
       weapon_id:
         type: string
+    type: object
+  special_effects.CreateRequest:
+    properties:
+      combo_card_id:
+        type: string
+      damage:
+        type: integer
+      damage_type:
+        type: integer
+      description:
+        type: string
+      special_effect_type:
+        type: integer
+    type: object
+  special_effects.UpdateRequest:
+    properties:
+      combo_card_id:
+        type: string
+      damage:
+        type: integer
+      damage_type:
+        type: integer
+      description:
+        type: string
+      special_effect_type:
+        type: integer
     type: object
   weapon_combos.CreateRequest:
     properties:
@@ -415,6 +590,196 @@ paths:
       summary: Update a character
       tags:
       - Characters
+  /combo_cards:
+    get:
+      description: List all combo cards
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ComboCard'
+            type: array
+      summary: List all combo cards
+      tags:
+      - ComboCards
+    post:
+      consumes:
+      - application/json
+      description: Create a new combo card
+      parameters:
+      - description: Combo Card
+        in: body
+        name: comboCard
+        required: true
+        schema:
+          $ref: '#/definitions/combo_cards.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ComboCard'
+      summary: Create a new combo card
+      tags:
+      - ComboCards
+  /combo_cards/{id}:
+    delete:
+      description: Delete a combo card
+      parameters:
+      - description: Combo Card ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+      summary: Delete a combo card
+      tags:
+      - ComboCards
+    get:
+      description: Get a combo card by ID
+      parameters:
+      - description: Combo Card ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ComboCard'
+      summary: Get a combo card by ID
+      tags:
+      - ComboCards
+    put:
+      consumes:
+      - application/json
+      description: Update a combo card
+      parameters:
+      - description: Combo Card ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Combo Card
+        in: body
+        name: comboCard
+        required: true
+        schema:
+          $ref: '#/definitions/combo_cards.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ComboCard'
+      summary: Update a combo card
+      tags:
+      - ComboCards
+  /damage_combo_cards:
+    get:
+      description: List all damage combo cards
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.DamageComboCard'
+            type: array
+      summary: List all damage combo cards
+      tags:
+      - DamageComboCards
+    post:
+      consumes:
+      - application/json
+      description: Create a new damage combo card
+      parameters:
+      - description: Damage Combo Card
+        in: body
+        name: damageComboCard
+        required: true
+        schema:
+          $ref: '#/definitions/damage_combo_cards.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DamageComboCard'
+      summary: Create a new damage combo card
+      tags:
+      - DamageComboCards
+  /damage_combo_cards/{id}:
+    delete:
+      description: Delete a damage combo card
+      parameters:
+      - description: Damage Combo Card ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+      summary: Delete a damage combo card
+      tags:
+      - DamageComboCards
+    get:
+      description: Get a damage combo card by ID
+      parameters:
+      - description: Damage Combo Card ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DamageComboCard'
+      summary: Get a damage combo card by ID
+      tags:
+      - DamageComboCards
+    put:
+      consumes:
+      - application/json
+      description: Update a damage combo card
+      parameters:
+      - description: Damage Combo Card ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Damage Combo Card
+        in: body
+        name: damageComboCard
+        required: true
+        schema:
+          $ref: '#/definitions/damage_combo_cards.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DamageComboCard'
+      summary: Update a damage combo card
+      tags:
+      - DamageComboCards
   /enemies:
     get:
       description: List all enemies
@@ -711,6 +1076,101 @@ paths:
       summary: Update a location
       tags:
       - Locations
+  /special_effects:
+    get:
+      description: List all special effects
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.SpecialEffect'
+            type: array
+      summary: List all special effects
+      tags:
+      - SpecialEffects
+    post:
+      consumes:
+      - application/json
+      description: Create a new special effect
+      parameters:
+      - description: Special Effect
+        in: body
+        name: specialEffect
+        required: true
+        schema:
+          $ref: '#/definitions/special_effects.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SpecialEffect'
+      summary: Create a new special effect
+      tags:
+      - SpecialEffects
+  /special_effects/{id}:
+    delete:
+      description: Delete a special effect
+      parameters:
+      - description: Special Effect ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+      summary: Delete a special effect
+      tags:
+      - SpecialEffects
+    get:
+      description: Get a special effect by ID
+      parameters:
+      - description: Special Effect ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SpecialEffect'
+      summary: Get a special effect by ID
+      tags:
+      - SpecialEffects
+    put:
+      consumes:
+      - application/json
+      description: Update a special effect
+      parameters:
+      - description: Special Effect ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Special Effect
+        in: body
+        name: specialEffect
+        required: true
+        schema:
+          $ref: '#/definitions/special_effects.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SpecialEffect'
+      summary: Update a special effect
+      tags:
+      - SpecialEffects
   /weapon_combos:
     get:
       description: List all weapon combos

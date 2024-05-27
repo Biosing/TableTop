@@ -42,10 +42,32 @@ func InitRoutes(router *gin.Engine) {
 	router.DELETE("/weapons/:id", handlers.GetWeaponHandler().DeleteWeapon)
 	router.GET("/weapons", handlers.GetWeaponHandler().ListWeapons)
 
-	//Маршруты для Weapon Combo
+	//Маршруты для Weapon combo
 	router.POST("/weapon_combos", handlers.GetWeaponComboHandler().CreateWeaponCombo)
 	router.GET("/weapon_combos/:id", handlers.GetWeaponComboHandler().GetWeaponCombo)
 	router.PUT("/weapon_combos/:id", handlers.GetWeaponComboHandler().UpdateWeaponCombo)
 	router.DELETE("/weapon_combos/:id", handlers.GetWeaponComboHandler().DeleteWeaponCombo)
 	router.GET("/weapon_combos", handlers.GetWeaponComboHandler().ListWeaponCombos)
+
+	//Маршруты для Combo cards
+	router.POST("/combo_cards", handlers.GetComboCardHandler().CreateComboCard)
+	router.GET("/combo_cards/:id", handlers.GetComboCardHandler().GetComboCard)
+	router.PUT("/combo_cards/:id", handlers.GetComboCardHandler().UpdateComboCard)
+	router.DELETE("/combo_cards/:id", handlers.GetComboCardHandler().DeleteComboCard)
+	router.GET("/combo_cards", handlers.GetComboCardHandler().ListComboCards)
+
+	//Маршруты для Damage combo cards
+	router.POST("/damage_combo_cards", handlers.GetDamageComboCardHandler().CreateDamageComboCard)
+	router.GET("/damage_combo_cards/:id", handlers.GetDamageComboCardHandler().GetDamageComboCard)
+	router.PUT("/damage_combo_cards/:id", handlers.GetDamageComboCardHandler().UpdateDamageComboCard)
+	router.DELETE("/damage_combo_cards/:id", handlers.GetDamageComboCardHandler().DeleteDamageComboCard)
+	router.GET("/damage_combo_cards", handlers.GetDamageComboCardHandler().ListDamageComboCards)
+
+	//Маршруты для Damage special effects
+	router.POST("/special_effects", handlers.GetSpecialEffectHandler().CreateSpecialEffect)
+	router.GET("/special_effects/:id", handlers.GetSpecialEffectHandler().GetSpecialEffect)
+	router.PUT("/special_effects/:id", handlers.GetSpecialEffectHandler().UpdateSpecialEffect)
+	router.DELETE("/special_effects/:id", handlers.GetSpecialEffectHandler().DeleteSpecialEffect)
+	router.GET("/special_effects", handlers.GetSpecialEffectHandler().ListSpecialEffects)
+
 }

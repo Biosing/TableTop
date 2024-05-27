@@ -73,6 +73,15 @@ func Migrate(db *gorm.DB) error {
 				return tx.Migrator().DropTable("enemy")
 			},
 		},
+		{
+			ID: "202405271001",
+			Migrate: func(tx *gorm.DB) error {
+				return tx.AutoMigrate(&models.ComboCard{}, &models.DamageComboCard{}, &models.SpecialEffect{})
+			},
+			Rollback: func(tx *gorm.DB) error {
+				return tx.Migrator().DropTable("combo_cards", "damage_combo_cards", "special_effects")
+			},
+		},
 	})
 
 	return m.Migrate()

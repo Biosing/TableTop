@@ -153,6 +153,294 @@
                 }
             }
         },
+        "/combo_cards": {
+            "get": {
+                "description": "List all combo cards",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ComboCards"
+                ],
+                "summary": "List all combo cards",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ComboCard"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new combo card",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ComboCards"
+                ],
+                "summary": "Create a new combo card",
+                "parameters": [
+                    {
+                        "description": "Combo Card",
+                        "name": "comboCard",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/combo_cards.CreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ComboCard"
+                        }
+                    }
+                }
+            }
+        },
+        "/combo_cards/{id}": {
+            "get": {
+                "description": "Get a combo card by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ComboCards"
+                ],
+                "summary": "Get a combo card by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Combo Card ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ComboCard"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a combo card",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ComboCards"
+                ],
+                "summary": "Update a combo card",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Combo Card ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Combo Card",
+                        "name": "comboCard",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/combo_cards.UpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ComboCard"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a combo card",
+                "tags": [
+                    "ComboCards"
+                ],
+                "summary": "Delete a combo card",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Combo Card ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/damage_combo_cards": {
+            "get": {
+                "description": "List all damage combo cards",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DamageComboCards"
+                ],
+                "summary": "List all damage combo cards",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.DamageComboCard"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new damage combo card",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DamageComboCards"
+                ],
+                "summary": "Create a new damage combo card",
+                "parameters": [
+                    {
+                        "description": "Damage Combo Card",
+                        "name": "damageComboCard",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/damage_combo_cards.CreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.DamageComboCard"
+                        }
+                    }
+                }
+            }
+        },
+        "/damage_combo_cards/{id}": {
+            "get": {
+                "description": "Get a damage combo card by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DamageComboCards"
+                ],
+                "summary": "Get a damage combo card by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Damage Combo Card ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.DamageComboCard"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a damage combo card",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "DamageComboCards"
+                ],
+                "summary": "Update a damage combo card",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Damage Combo Card ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Damage Combo Card",
+                        "name": "damageComboCard",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/damage_combo_cards.UpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.DamageComboCard"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a damage combo card",
+                "tags": [
+                    "DamageComboCards"
+                ],
+                "summary": "Delete a damage combo card",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Damage Combo Card ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
         "/enemies": {
             "get": {
                 "description": "List all enemies",
@@ -602,6 +890,150 @@
                 }
             }
         },
+        "/special_effects": {
+            "get": {
+                "description": "List all special effects",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SpecialEffects"
+                ],
+                "summary": "List all special effects",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.SpecialEffect"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new special effect",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SpecialEffects"
+                ],
+                "summary": "Create a new special effect",
+                "parameters": [
+                    {
+                        "description": "Special Effect",
+                        "name": "specialEffect",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/special_effects.CreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SpecialEffect"
+                        }
+                    }
+                }
+            }
+        },
+        "/special_effects/{id}": {
+            "get": {
+                "description": "Get a special effect by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SpecialEffects"
+                ],
+                "summary": "Get a special effect by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Special Effect ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SpecialEffect"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a special effect",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "SpecialEffects"
+                ],
+                "summary": "Update a special effect",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Special Effect ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Special Effect",
+                        "name": "specialEffect",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/special_effects.UpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SpecialEffect"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a special effect",
+                "tags": [
+                    "SpecialEffects"
+                ],
+                "summary": "Delete a special effect",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Special Effect ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
         "/weapon_combos": {
             "get": {
                 "description": "List all weapon combos",
@@ -944,6 +1376,144 @@
                 }
             }
         },
+        "combo_cards.CreateRequest": {
+            "type": "object",
+            "properties": {
+                "added_number_cells": {
+                    "type": "integer"
+                },
+                "character_id": {
+                    "type": "string"
+                },
+                "combo_card_type": {
+                    "type": "integer"
+                },
+                "damage_combo_cards": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/combo_cards.DamageComboCard"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "required_number_cells": {
+                    "type": "integer"
+                },
+                "special_effects": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/combo_cards.SpecialEffect"
+                    }
+                },
+                "target_enemy_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "combo_cards.DamageComboCard": {
+            "type": "object",
+            "properties": {
+                "damage": {
+                    "type": "integer"
+                },
+                "damage_type": {
+                    "type": "integer"
+                },
+                "range_from": {
+                    "type": "integer"
+                },
+                "range_to": {
+                    "type": "integer"
+                }
+            }
+        },
+        "combo_cards.SpecialEffect": {
+            "type": "object",
+            "properties": {
+                "damage": {
+                    "type": "integer"
+                },
+                "damage_type": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "special_effect_type": {
+                    "type": "integer"
+                }
+            }
+        },
+        "combo_cards.UpdateRequest": {
+            "type": "object",
+            "properties": {
+                "added_number_cells": {
+                    "type": "integer"
+                },
+                "character_id": {
+                    "type": "string"
+                },
+                "combo_card_type": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "required_number_cells": {
+                    "type": "integer"
+                },
+                "target_enemy_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "damage_combo_cards.CreateRequest": {
+            "type": "object",
+            "properties": {
+                "combo_card_id": {
+                    "type": "string"
+                },
+                "damage": {
+                    "type": "integer"
+                },
+                "damage_type": {
+                    "type": "integer"
+                },
+                "range_from": {
+                    "type": "integer"
+                },
+                "range_to": {
+                    "type": "integer"
+                }
+            }
+        },
+        "damage_combo_cards.UpdateRequest": {
+            "type": "object",
+            "properties": {
+                "combo_card_id": {
+                    "type": "string"
+                },
+                "damage": {
+                    "type": "integer"
+                },
+                "damage_type": {
+                    "type": "integer"
+                },
+                "range_from": {
+                    "type": "integer"
+                },
+                "range_to": {
+                    "type": "integer"
+                }
+            }
+        },
         "enemies.CreateRequest": {
             "type": "object",
             "properties": {
@@ -1133,6 +1703,72 @@
                 }
             }
         },
+        "models.ComboCard": {
+            "type": "object",
+            "properties": {
+                "added_number_cells": {
+                    "type": "integer"
+                },
+                "character_id": {
+                    "type": "string"
+                },
+                "combo_card_type": {
+                    "type": "integer"
+                },
+                "damage_combo_cards": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.DamageComboCard"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "required_number_cells": {
+                    "type": "integer"
+                },
+                "special_effects": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.SpecialEffect"
+                    }
+                },
+                "target_enemy_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.DamageComboCard": {
+            "type": "object",
+            "properties": {
+                "combo_card_id": {
+                    "type": "string"
+                },
+                "damage": {
+                    "type": "integer"
+                },
+                "damage_type": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "range_from": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "range_to": {
+                    "type": "integer",
+                    "example": 3
+                }
+            }
+        },
         "models.Enemy": {
             "type": "object",
             "properties": {
@@ -1225,6 +1861,29 @@
                 }
             }
         },
+        "models.SpecialEffect": {
+            "type": "object",
+            "properties": {
+                "combo_card_id": {
+                    "type": "string"
+                },
+                "damage": {
+                    "type": "integer"
+                },
+                "damage_type": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "special_effect_type": {
+                    "type": "integer"
+                }
+            }
+        },
         "models.Weapon": {
             "type": "object",
             "properties": {
@@ -1268,6 +1927,46 @@
                 },
                 "weapon_id": {
                     "type": "string"
+                }
+            }
+        },
+        "special_effects.CreateRequest": {
+            "type": "object",
+            "properties": {
+                "combo_card_id": {
+                    "type": "string"
+                },
+                "damage": {
+                    "type": "integer"
+                },
+                "damage_type": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "special_effect_type": {
+                    "type": "integer"
+                }
+            }
+        },
+        "special_effects.UpdateRequest": {
+            "type": "object",
+            "properties": {
+                "combo_card_id": {
+                    "type": "string"
+                },
+                "damage": {
+                    "type": "integer"
+                },
+                "damage_type": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "special_effect_type": {
+                    "type": "integer"
                 }
             }
         },
