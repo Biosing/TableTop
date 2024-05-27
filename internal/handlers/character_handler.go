@@ -5,10 +5,10 @@ import (
 
 	"github.com/google/uuid"
 
-	"table_top/internal/dtos/requests/characters"
-	"table_top/internal/services"
-
 	"github.com/gin-gonic/gin"
+
+	"table_top/internal/dtos/requests/characters"
+	services "table_top/internal/services/characters"
 )
 
 type CharacterHandler struct {

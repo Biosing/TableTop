@@ -1391,9 +1391,6 @@ const docTemplate = `{
                 "character_id": {
                     "type": "string"
                 },
-                "combo_card_type": {
-                    "type": "integer"
-                },
                 "damage_combo_cards": {
                     "type": "array",
                     "items": {
@@ -1417,6 +1414,9 @@ const docTemplate = `{
                 },
                 "target_enemy_id": {
                     "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/models.ComboCardType"
                 }
             }
         },
@@ -1426,14 +1426,14 @@ const docTemplate = `{
                 "damage": {
                     "type": "integer"
                 },
-                "damage_type": {
-                    "type": "integer"
-                },
                 "range_from": {
                     "type": "integer"
                 },
                 "range_to": {
                     "type": "integer"
+                },
+                "type": {
+                    "$ref": "#/definitions/models.DamageComboCardType"
                 }
             }
         },
@@ -1444,13 +1444,13 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "damage_type": {
-                    "type": "integer"
+                    "$ref": "#/definitions/models.SpecialEffectDamageType"
                 },
                 "description": {
                     "type": "string"
                 },
-                "special_effect_type": {
-                    "type": "integer"
+                "type": {
+                    "$ref": "#/definitions/models.SpecialEffectType"
                 }
             }
         },
@@ -1463,9 +1463,6 @@ const docTemplate = `{
                 "character_id": {
                     "type": "string"
                 },
-                "combo_card_type": {
-                    "type": "integer"
-                },
                 "description": {
                     "type": "string"
                 },
@@ -1477,6 +1474,9 @@ const docTemplate = `{
                 },
                 "target_enemy_id": {
                     "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/models.ComboCardType"
                 }
             }
         },
@@ -1489,14 +1489,14 @@ const docTemplate = `{
                 "damage": {
                     "type": "integer"
                 },
-                "damage_type": {
-                    "type": "integer"
-                },
                 "range_from": {
                     "type": "integer"
                 },
                 "range_to": {
                     "type": "integer"
+                },
+                "type": {
+                    "$ref": "#/definitions/models.DamageComboCardType"
                 }
             }
         },
@@ -1509,14 +1509,14 @@ const docTemplate = `{
                 "damage": {
                     "type": "integer"
                 },
-                "damage_type": {
-                    "type": "integer"
-                },
                 "range_from": {
                     "type": "integer"
                 },
                 "range_to": {
                     "type": "integer"
+                },
+                "type": {
+                    "$ref": "#/definitions/models.DamageComboCardType"
                 }
             }
         },
@@ -1718,9 +1718,6 @@ const docTemplate = `{
                 "character_id": {
                     "type": "string"
                 },
-                "combo_card_type": {
-                    "type": "integer"
-                },
                 "damage_combo_cards": {
                     "type": "array",
                     "items": {
@@ -1747,8 +1744,24 @@ const docTemplate = `{
                 },
                 "target_enemy_id": {
                     "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/models.ComboCardType"
                 }
             }
+        },
+        "models.ComboCardType": {
+            "type": "integer",
+            "enum": [
+                0,
+                1,
+                2
+            ],
+            "x-enum-varnames": [
+                "Flex",
+                "CombatSkill",
+                "Ability"
+            ]
         },
         "models.DamageComboCard": {
             "type": "object",
@@ -1759,21 +1772,28 @@ const docTemplate = `{
                 "damage": {
                     "type": "integer"
                 },
-                "damage_type": {
-                    "type": "integer"
-                },
                 "id": {
                     "type": "string"
                 },
                 "range_from": {
-                    "type": "integer",
-                    "example": 1
+                    "type": "integer"
                 },
                 "range_to": {
-                    "type": "integer",
-                    "example": 3
+                    "type": "integer"
+                },
+                "type": {
+                    "$ref": "#/definitions/models.DamageComboCardType"
                 }
             }
+        },
+        "models.DamageComboCardType": {
+            "type": "integer",
+            "enum": [
+                0
+            ],
+            "x-enum-varnames": [
+                "PhysicalDamage"
+            ]
         },
         "models.Enemy": {
             "type": "object",
@@ -1877,7 +1897,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "damage_type": {
-                    "type": "integer"
+                    "$ref": "#/definitions/models.SpecialEffectDamageType"
                 },
                 "description": {
                     "type": "string"
@@ -1885,10 +1905,28 @@ const docTemplate = `{
                 "id": {
                     "type": "string"
                 },
-                "special_effect_type": {
-                    "type": "integer"
+                "type": {
+                    "$ref": "#/definitions/models.SpecialEffectType"
                 }
             }
+        },
+        "models.SpecialEffectDamageType": {
+            "type": "integer",
+            "enum": [
+                0
+            ],
+            "x-enum-varnames": [
+                "EffectOnly"
+            ]
+        },
+        "models.SpecialEffectType": {
+            "type": "integer",
+            "enum": [
+                0
+            ],
+            "x-enum-varnames": [
+                "Variable"
+            ]
         },
         "models.Weapon": {
             "type": "object",
@@ -1919,9 +1957,6 @@ const docTemplate = `{
         "models.WeaponCombo": {
             "type": "object",
             "properties": {
-                "combo_type": {
-                    "type": "integer"
-                },
                 "count": {
                     "type": "integer"
                 },
@@ -1931,10 +1966,26 @@ const docTemplate = `{
                 "order": {
                     "type": "integer"
                 },
+                "type": {
+                    "$ref": "#/definitions/models.WeaponComboType"
+                },
                 "weapon_id": {
                     "type": "string"
                 }
             }
+        },
+        "models.WeaponComboType": {
+            "type": "integer",
+            "enum": [
+                0,
+                1,
+                2
+            ],
+            "x-enum-varnames": [
+                "FlexSlot",
+                "CombatSkillSlot",
+                "AbilitySlot"
+            ]
         },
         "special_effects.CreateRequest": {
             "type": "object",
@@ -1946,13 +1997,13 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "damage_type": {
-                    "type": "integer"
+                    "$ref": "#/definitions/models.SpecialEffectDamageType"
                 },
                 "description": {
                     "type": "string"
                 },
-                "special_effect_type": {
-                    "type": "integer"
+                "type": {
+                    "$ref": "#/definitions/models.SpecialEffectType"
                 }
             }
         },
@@ -1966,27 +2017,27 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "damage_type": {
-                    "type": "integer"
+                    "$ref": "#/definitions/models.SpecialEffectDamageType"
                 },
                 "description": {
                     "type": "string"
                 },
-                "special_effect_type": {
-                    "type": "integer"
+                "type": {
+                    "$ref": "#/definitions/models.SpecialEffectType"
                 }
             }
         },
         "weapon_combos.CreateRequest": {
             "type": "object",
             "properties": {
-                "combo_type": {
-                    "type": "integer"
-                },
                 "count": {
                     "type": "integer"
                 },
                 "order": {
                     "type": "integer"
+                },
+                "type": {
+                    "$ref": "#/definitions/models.WeaponComboType"
                 },
                 "weapon_id": {
                     "type": "string"
@@ -1996,14 +2047,14 @@ const docTemplate = `{
         "weapon_combos.UpdateRequest": {
             "type": "object",
             "properties": {
-                "combo_type": {
-                    "type": "integer"
-                },
                 "count": {
                     "type": "integer"
                 },
                 "order": {
                     "type": "integer"
+                },
+                "type": {
+                    "$ref": "#/definitions/models.WeaponComboType"
                 },
                 "weapon_id": {
                     "type": "string"
@@ -2053,14 +2104,14 @@ const docTemplate = `{
         "weapons.WeaponCombo": {
             "type": "object",
             "properties": {
-                "combo_type": {
-                    "type": "integer"
-                },
                 "count": {
                     "type": "integer"
                 },
                 "order": {
                     "type": "integer"
+                },
+                "type": {
+                    "$ref": "#/definitions/models.WeaponComboType"
                 }
             }
         }

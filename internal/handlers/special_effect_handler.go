@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 
 	"table_top/internal/dtos/requests/special_effects"
-	"table_top/internal/services"
+	"table_top/internal/services/combo_cards"
 )
 
 type SpecialEffectHandler struct {

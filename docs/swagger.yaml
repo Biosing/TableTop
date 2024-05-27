@@ -40,8 +40,6 @@ definitions:
         type: integer
       character_id:
         type: string
-      combo_card_type:
-        type: integer
       damage_combo_cards:
         items:
           $ref: '#/definitions/combo_cards.DamageComboCard'
@@ -58,28 +56,30 @@ definitions:
         type: array
       target_enemy_id:
         type: string
+      type:
+        $ref: '#/definitions/models.ComboCardType'
     type: object
   combo_cards.DamageComboCard:
     properties:
       damage:
         type: integer
-      damage_type:
-        type: integer
       range_from:
         type: integer
       range_to:
         type: integer
+      type:
+        $ref: '#/definitions/models.DamageComboCardType'
     type: object
   combo_cards.SpecialEffect:
     properties:
       damage:
         type: integer
       damage_type:
-        type: integer
+        $ref: '#/definitions/models.SpecialEffectDamageType'
       description:
         type: string
-      special_effect_type:
-        type: integer
+      type:
+        $ref: '#/definitions/models.SpecialEffectType'
     type: object
   combo_cards.UpdateRequest:
     properties:
@@ -87,8 +87,6 @@ definitions:
         type: integer
       character_id:
         type: string
-      combo_card_type:
-        type: integer
       description:
         type: string
       name:
@@ -97,6 +95,8 @@ definitions:
         type: integer
       target_enemy_id:
         type: string
+      type:
+        $ref: '#/definitions/models.ComboCardType'
     type: object
   damage_combo_cards.CreateRequest:
     properties:
@@ -104,12 +104,12 @@ definitions:
         type: string
       damage:
         type: integer
-      damage_type:
-        type: integer
       range_from:
         type: integer
       range_to:
         type: integer
+      type:
+        $ref: '#/definitions/models.DamageComboCardType'
     type: object
   damage_combo_cards.UpdateRequest:
     properties:
@@ -117,12 +117,12 @@ definitions:
         type: string
       damage:
         type: integer
-      damage_type:
-        type: integer
       range_from:
         type: integer
       range_to:
         type: integer
+      type:
+        $ref: '#/definitions/models.DamageComboCardType'
     type: object
   enemies.CreateRequest:
     properties:
@@ -258,8 +258,6 @@ definitions:
         type: integer
       character_id:
         type: string
-      combo_card_type:
-        type: integer
       damage_combo_cards:
         items:
           $ref: '#/definitions/models.DamageComboCard'
@@ -278,24 +276,40 @@ definitions:
         type: array
       target_enemy_id:
         type: string
+      type:
+        $ref: '#/definitions/models.ComboCardType'
     type: object
+  models.ComboCardType:
+    enum:
+    - 0
+    - 1
+    - 2
+    type: integer
+    x-enum-varnames:
+    - Flex
+    - CombatSkill
+    - Ability
   models.DamageComboCard:
     properties:
       combo_card_id:
         type: string
       damage:
         type: integer
-      damage_type:
-        type: integer
       id:
         type: string
       range_from:
-        example: 1
         type: integer
       range_to:
-        example: 3
         type: integer
+      type:
+        $ref: '#/definitions/models.DamageComboCardType'
     type: object
+  models.DamageComboCardType:
+    enum:
+    - 0
+    type: integer
+    x-enum-varnames:
+    - PhysicalDamage
   models.Enemy:
     properties:
       class:
@@ -367,14 +381,26 @@ definitions:
       damage:
         type: integer
       damage_type:
-        type: integer
+        $ref: '#/definitions/models.SpecialEffectDamageType'
       description:
         type: string
       id:
         type: string
-      special_effect_type:
-        type: integer
+      type:
+        $ref: '#/definitions/models.SpecialEffectType'
     type: object
+  models.SpecialEffectDamageType:
+    enum:
+    - 0
+    type: integer
+    x-enum-varnames:
+    - EffectOnly
+  models.SpecialEffectType:
+    enum:
+    - 0
+    type: integer
+    x-enum-varnames:
+    - Variable
   models.Weapon:
     properties:
       character_id:
@@ -394,17 +420,27 @@ definitions:
     type: object
   models.WeaponCombo:
     properties:
-      combo_type:
-        type: integer
       count:
         type: integer
       id:
         type: string
       order:
         type: integer
+      type:
+        $ref: '#/definitions/models.WeaponComboType'
       weapon_id:
         type: string
     type: object
+  models.WeaponComboType:
+    enum:
+    - 0
+    - 1
+    - 2
+    type: integer
+    x-enum-varnames:
+    - FlexSlot
+    - CombatSkillSlot
+    - AbilitySlot
   special_effects.CreateRequest:
     properties:
       combo_card_id:
@@ -412,11 +448,11 @@ definitions:
       damage:
         type: integer
       damage_type:
-        type: integer
+        $ref: '#/definitions/models.SpecialEffectDamageType'
       description:
         type: string
-      special_effect_type:
-        type: integer
+      type:
+        $ref: '#/definitions/models.SpecialEffectType'
     type: object
   special_effects.UpdateRequest:
     properties:
@@ -425,31 +461,31 @@ definitions:
       damage:
         type: integer
       damage_type:
-        type: integer
+        $ref: '#/definitions/models.SpecialEffectDamageType'
       description:
         type: string
-      special_effect_type:
-        type: integer
+      type:
+        $ref: '#/definitions/models.SpecialEffectType'
     type: object
   weapon_combos.CreateRequest:
     properties:
-      combo_type:
-        type: integer
       count:
         type: integer
       order:
         type: integer
+      type:
+        $ref: '#/definitions/models.WeaponComboType'
       weapon_id:
         type: string
     type: object
   weapon_combos.UpdateRequest:
     properties:
-      combo_type:
-        type: integer
       count:
         type: integer
       order:
         type: integer
+      type:
+        $ref: '#/definitions/models.WeaponComboType'
       weapon_id:
         type: string
     type: object
@@ -481,12 +517,12 @@ definitions:
     type: object
   weapons.WeaponCombo:
     properties:
-      combo_type:
-        type: integer
       count:
         type: integer
       order:
         type: integer
+      type:
+        $ref: '#/definitions/models.WeaponComboType'
     type: object
 host: localhost:8080
 info:

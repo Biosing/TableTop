@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 
 	"table_top/internal/dtos/requests/weapons"
-	"table_top/internal/services"
+	"table_top/internal/services/items"
 )
 
 type WeaponHandler struct {

@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 
 	"table_top/internal/dtos/requests/enemies"
-	"table_top/internal/services"
+	services "table_top/internal/services/enemies"
 )
 
 type EnemyHandler struct {

@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 
 	"table_top/internal/dtos/requests/damage_combo_cards"
-	"table_top/internal/services"
+	services "table_top/internal/services/combo_cards"
 )
 
 type DamageComboCardHandler struct {

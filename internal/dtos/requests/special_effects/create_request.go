@@ -1,11 +1,15 @@
 package special_effects
 
-import "github.com/google/uuid"
+import (
+	"github.com/google/uuid"
+
+	models "table_top/internal/models/combo_cards"
+)
 
 type CreateRequest struct {
-	ComboCardID       uuid.UUID `json:"combo_card_id"`
-	SpecialEffectType int       `json:"special_effect_type"`
-	DamageType        int       `json:"damage_type"`
-	Damage            int       `json:"damage"`
-	Description       string    `json:"description"`
+	ComboCardID uuid.UUID                      `json:"combo_card_id"`
+	Type        models.SpecialEffectType       `json:"type"`
+	DamageType  models.SpecialEffectDamageType `json:"damage_type"`
+	Damage      int                            `json:"damage"`
+	Description string                         `json:"description"`
 }

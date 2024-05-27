@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 
 	"table_top/internal/dtos/requests/combo_cards"
-	"table_top/internal/services"
+	services "table_top/internal/services/combo_cards"
 )
 
 type ComboCardHandler struct {

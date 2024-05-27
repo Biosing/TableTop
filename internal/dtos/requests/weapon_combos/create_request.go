@@ -1,10 +1,14 @@
 package weapon_combos
 
-import "github.com/google/uuid"
+import (
+	"github.com/google/uuid"
+
+	models "table_top/internal/models/items"
+)
 
 type CreateRequest struct {
-	WeaponID  uuid.UUID `json:"weapon_id"`
-	ComboType int       `json:"combo_type"`
-	Count     int       `json:"count"`
-	Order     int       `json:"order"`
+	WeaponID uuid.UUID              `json:"weapon_id"`
+	Type     models.WeaponComboType `json:"type"`
+	Count    int                    `json:"count"`
+	Order    int                    `json:"order"`
 }

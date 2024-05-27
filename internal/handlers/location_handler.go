@@ -5,11 +5,10 @@ import (
 
 	"github.com/google/uuid"
 
-	"table_top/internal/dtos/requests/locations"
-	"table_top/internal/models"
-	"table_top/internal/services"
-
 	"github.com/gin-gonic/gin"
+
+	"table_top/internal/dtos/requests/locations"
+	services "table_top/internal/services/locations"
 )
 
 type LocationHandler struct {
@@ -127,12 +126,6 @@ func (h *LocationHandler) UpdateLocation(c *gin.Context) {
 	id, err := uuid.Parse(idStr)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
-		return
-	}
-
-	var location models.Location
-	if err := c.ShouldBindJSON(&location); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
