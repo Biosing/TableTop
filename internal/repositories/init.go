@@ -5,11 +5,21 @@ import (
 )
 
 type Repositories struct {
-	CharacterRepository CharacterRepository
+	CharacterRepository   CharacterRepository
+	LocationRepository    LocationRepository
+	EnemyRepository       EnemyRepository
+	EnemyMoveRepository   EnemyMoveRepository
+	WeaponRepository      WeaponRepository
+	WeaponComboRepository WeaponComboRepository
 }
 
 func InitRepositories(db *gorm.DB) Repositories {
 	return Repositories{
-		CharacterRepository: NewCharacterRepository(db),
+		CharacterRepository:   NewCharacterRepository(db),
+		LocationRepository:    NewLocationRepository(db),
+		EnemyRepository:       NewEnemyRepository(db),
+		EnemyMoveRepository:   NewEnemyMoveRepository(db),
+		WeaponRepository:      NewWeaponRepository(db),
+		WeaponComboRepository: NewWeaponComboRepository(db),
 	}
 }

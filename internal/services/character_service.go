@@ -3,6 +3,8 @@ package services
 import (
 	"context"
 
+	"github.com/google/uuid"
+
 	"table_top/internal/dtos/requests/characters"
 	"table_top/internal/models"
 	"table_top/internal/repositories"
@@ -10,10 +12,10 @@ import (
 
 type CharacterService interface {
 	CreateCharacter(ctx context.Context, character *characters.CreateRequest) (*models.Character, error)
-	DeleteCharacter(ctx context.Context, id string) error
-	GetCharacterByID(ctx context.Context, id string) (*models.Character, error)
+	DeleteCharacter(ctx context.Context, id uuid.UUID) error
+	GetCharacterByID(ctx context.Context, id uuid.UUID) (*models.Character, error)
 	ListCharacters(ctx context.Context) ([]*models.Character, error)
-	UpdateCharacter(ctx context.Context, character *characters.UpdateRequest) (*models.Character, error)
+	UpdateCharacter(ctx context.Context, id uuid.UUID, character *characters.UpdateRequest) (*models.Character, error)
 }
 
 type characterService struct {
@@ -42,11 +44,11 @@ func (s *characterService) CreateCharacter(ctx context.Context, character *chara
 	return repoCharacter, nil
 }
 
-func (s *characterService) DeleteCharacter(ctx context.Context, id string) error {
+func (s *characterService) DeleteCharacter(ctx context.Context, id uuid.UUID) error {
 	return s.repo.Delete(ctx, id)
 }
 
-func (s *characterService) GetCharacterByID(ctx context.Context, id string) (*models.Character, error) {
+func (s *characterService) GetCharacterByID(ctx context.Context, id uuid.UUID) (*models.Character, error) {
 	return s.repo.GetByID(ctx, id)
 }
 
@@ -54,8 +56,8 @@ func (s *characterService) ListCharacters(ctx context.Context) ([]*models.Charac
 	return s.repo.List(ctx)
 }
 
-func (s *characterService) UpdateCharacter(ctx context.Context, request *characters.UpdateRequest) (*models.Character, error) {
-	character, err := s.repo.GetByID(ctx, request.ID)
+func (s *characterService) UpdateCharacter(ctx context.Context, id uuid.UUID, request *characters.UpdateRequest) (*models.Character, error) {
+	character, err := s.repo.GetByID(ctx, id)
 	if err != nil {
 		return nil, err
 	}

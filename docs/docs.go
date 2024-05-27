@@ -37,38 +37,6 @@ const docTemplate = `{
                     }
                 }
             },
-            "put": {
-                "description": "Update a character",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Characters"
-                ],
-                "summary": "Update a character",
-                "parameters": [
-                    {
-                        "description": "Character",
-                        "name": "character",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/characters.UpdateRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.Character"
-                        }
-                    }
-                }
-            },
             "post": {
                 "description": "Create a new character",
                 "consumes": [
@@ -130,6 +98,45 @@ const docTemplate = `{
                     }
                 }
             },
+            "put": {
+                "description": "Update a character",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Characters"
+                ],
+                "summary": "Update a character",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Enemy ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Character",
+                        "name": "character",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/characters.UpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Character"
+                        }
+                    }
+                }
+            },
             "delete": {
                 "description": "Delete a character by ID",
                 "tags": [
@@ -140,6 +147,743 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "Character ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/enemies": {
+            "get": {
+                "description": "List all enemies",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Enemies"
+                ],
+                "summary": "List all enemies",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Enemy"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new enemy with enemy moves",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Enemies"
+                ],
+                "summary": "Create a new enemy",
+                "parameters": [
+                    {
+                        "description": "Enemy",
+                        "name": "enemy",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/enemies.CreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Enemy"
+                        }
+                    }
+                }
+            }
+        },
+        "/enemies/{id}": {
+            "get": {
+                "description": "Get an enemy by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Enemies"
+                ],
+                "summary": "Get an enemy by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Enemy ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Enemy"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update an existing enemy",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Enemies"
+                ],
+                "summary": "Update an existing enemy",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Enemy ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Enemy",
+                        "name": "enemy",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/enemies.UpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Enemy"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete an enemy by ID",
+                "tags": [
+                    "Enemies"
+                ],
+                "summary": "Delete an enemy by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Enemy ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/enemy_moves": {
+            "get": {
+                "description": "List all enemy moves, optionally filtered by EnemyID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "EnemyMoves"
+                ],
+                "summary": "List all enemy moves",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Enemy ID",
+                        "name": "EnemyID",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.EnemyMove"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/enemy_moves/{enemyId}": {
+            "post": {
+                "description": "Create a new enemy move",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "EnemyMoves"
+                ],
+                "summary": "Create a new enemy move",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Enemy ID",
+                        "name": "enemyId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "EnemyMove",
+                        "name": "enemyMove",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/enemy_moves.CreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.EnemyMove"
+                        }
+                    }
+                }
+            }
+        },
+        "/enemy_moves/{id}": {
+            "get": {
+                "description": "Get an enemy move by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "EnemyMoves"
+                ],
+                "summary": "Get an enemy move by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "EnemyMove ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.EnemyMove"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update an existing enemy move",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "EnemyMoves"
+                ],
+                "summary": "Update an existing enemy move",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "EnemyMove ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "EnemyMove",
+                        "name": "enemyMove",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/enemy_moves.UpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.EnemyMove"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete an enemy move by ID",
+                "tags": [
+                    "EnemyMoves"
+                ],
+                "summary": "Delete an enemy move by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "EnemyMove ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/locations": {
+            "get": {
+                "description": "List all locations",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "List all locations",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Location"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new location",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Create a new location",
+                "parameters": [
+                    {
+                        "description": "Location",
+                        "name": "location",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/locations.CreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Location"
+                        }
+                    }
+                }
+            }
+        },
+        "/locations/{id}": {
+            "get": {
+                "description": "Get a location by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Get a location by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Location ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Location"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a location",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Update a location",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Location ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Location",
+                        "name": "location",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/locations.UpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Location"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a location by ID",
+                "tags": [
+                    "Locations"
+                ],
+                "summary": "Delete a location by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Location ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/weapon_combos": {
+            "get": {
+                "description": "List all weapon combos",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "WeaponCombos"
+                ],
+                "summary": "List all weapon combos",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.WeaponCombo"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new weapon combo",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "WeaponCombos"
+                ],
+                "summary": "Create a new weapon combo",
+                "parameters": [
+                    {
+                        "description": "WeaponCombo",
+                        "name": "weaponCombo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/weapon_combos.CreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.WeaponCombo"
+                        }
+                    }
+                }
+            }
+        },
+        "/weapon_combos/{id}": {
+            "get": {
+                "description": "Get a weapon combo by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "WeaponCombos"
+                ],
+                "summary": "Get a weapon combo by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "WeaponCombo ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.WeaponCombo"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a weapon combo",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "WeaponCombos"
+                ],
+                "summary": "Update a weapon combo",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "WeaponCombo ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "WeaponCombo",
+                        "name": "weaponCombo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/weapon_combos.UpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.WeaponCombo"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a weapon combo by ID",
+                "tags": [
+                    "WeaponCombos"
+                ],
+                "summary": "Delete a weapon combo by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "WeaponCombo ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/weapons": {
+            "get": {
+                "description": "List all weapons",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Weapons"
+                ],
+                "summary": "List all weapons",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Weapon"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new weapon along with its combos",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Weapons"
+                ],
+                "summary": "Create a new weapon",
+                "parameters": [
+                    {
+                        "description": "Weapon",
+                        "name": "weapon",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/weapons.CreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Weapon"
+                        }
+                    }
+                }
+            }
+        },
+        "/weapons/{id}": {
+            "get": {
+                "description": "Get a weapon by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Weapons"
+                ],
+                "summary": "Get a weapon by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Weapon ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Weapon"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a weapon",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Weapons"
+                ],
+                "summary": "Update a weapon",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Weapon ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Weapon",
+                        "name": "weapon",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/weapons.UpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Weapon"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a weapon by ID",
+                "tags": [
+                    "Weapons"
+                ],
+                "summary": "Delete a weapon by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Weapon ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -195,9 +939,6 @@ const docTemplate = `{
                 "description": {
                     "type": "string"
                 },
-                "id": {
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
                 },
@@ -205,6 +946,166 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "sex": {
+                    "type": "string"
+                }
+            }
+        },
+        "enemies.CreateRequest": {
+            "type": "object",
+            "properties": {
+                "class": {
+                    "type": "string",
+                    "example": "Warrior"
+                },
+                "defense": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "description": {
+                    "type": "string",
+                    "example": "A small but fierce warrior"
+                },
+                "enemy_moves": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/enemies.EnemyMoves"
+                    }
+                },
+                "experience": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "hp": {
+                    "type": "integer",
+                    "example": 100
+                },
+                "level": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Goblin"
+                },
+                "quantity_deck": {
+                    "type": "integer",
+                    "example": 2
+                }
+            }
+        },
+        "enemies.EnemyMoves": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "example": "Close attack"
+                },
+                "range_from": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "range_to": {
+                    "type": "integer",
+                    "example": 10
+                }
+            }
+        },
+        "enemies.UpdateRequest": {
+            "type": "object",
+            "properties": {
+                "class": {
+                    "type": "string"
+                },
+                "defense": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "experience": {
+                    "type": "integer"
+                },
+                "hp": {
+                    "type": "integer"
+                },
+                "level": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "quantity_deck": {
+                    "type": "integer"
+                }
+            }
+        },
+        "enemy_moves.CreateRequest": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "example": "Close attack"
+                },
+                "range_from": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "range_to": {
+                    "type": "integer",
+                    "example": 10
+                }
+            }
+        },
+        "enemy_moves.UpdateRequest": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "range_from": {
+                    "type": "integer"
+                },
+                "range_to": {
+                    "type": "integer"
+                }
+            }
+        },
+        "locations.CreateRequest": {
+            "type": "object",
+            "properties": {
+                "danger_level": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "level": {
+                    "type": "integer"
+                },
+                "monsters_count": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "locations.UpdateRequest": {
+            "type": "object",
+            "properties": {
+                "danger_level": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "level": {
+                    "type": "integer"
+                },
+                "monsters_count": {
+                    "type": "integer"
+                },
+                "name": {
                     "type": "string"
                 }
             }
@@ -235,6 +1136,232 @@ const docTemplate = `{
                 },
                 "sex": {
                     "type": "string"
+                }
+            }
+        },
+        "models.Enemy": {
+            "type": "object",
+            "properties": {
+                "class": {
+                    "type": "string",
+                    "example": "Warrior"
+                },
+                "defense": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "description": {
+                    "type": "string",
+                    "example": "A small but fierce warrior"
+                },
+                "enemy_moves": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.EnemyMove"
+                    }
+                },
+                "experience": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "hp": {
+                    "type": "integer",
+                    "example": 100
+                },
+                "id": {
+                    "type": "string"
+                },
+                "level": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Goblin"
+                },
+                "quantity_deck": {
+                    "type": "integer",
+                    "example": 2
+                }
+            }
+        },
+        "models.EnemyMove": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "example": "Slash attack"
+                },
+                "enemy_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "range_from": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "range_to": {
+                    "type": "integer",
+                    "example": 3
+                }
+            }
+        },
+        "models.Location": {
+            "type": "object",
+            "properties": {
+                "danger_level": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "level": {
+                    "type": "integer"
+                },
+                "monsters_count": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Weapon": {
+            "type": "object",
+            "properties": {
+                "character_id": {
+                    "type": "string"
+                },
+                "count_cards": {
+                    "type": "integer"
+                },
+                "defense": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "weapon_combo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.WeaponCombo"
+                    }
+                }
+            }
+        },
+        "models.WeaponCombo": {
+            "type": "object",
+            "properties": {
+                "combo_type": {
+                    "type": "integer"
+                },
+                "count": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "order": {
+                    "type": "integer"
+                },
+                "weapon_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "weapon_combos.CreateRequest": {
+            "type": "object",
+            "properties": {
+                "combo_type": {
+                    "type": "integer"
+                },
+                "count": {
+                    "type": "integer"
+                },
+                "order": {
+                    "type": "integer"
+                },
+                "weapon_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "weapon_combos.UpdateRequest": {
+            "type": "object",
+            "properties": {
+                "combo_type": {
+                    "type": "integer"
+                },
+                "count": {
+                    "type": "integer"
+                },
+                "order": {
+                    "type": "integer"
+                },
+                "weapon_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "weapons.CreateRequest": {
+            "type": "object",
+            "properties": {
+                "character_id": {
+                    "type": "string"
+                },
+                "count_cards": {
+                    "type": "integer"
+                },
+                "defense": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "weapon_combo": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/weapons.WeaponCombo"
+                    }
+                }
+            }
+        },
+        "weapons.UpdateRequest": {
+            "type": "object",
+            "properties": {
+                "character_id": {
+                    "type": "string"
+                },
+                "count_cards": {
+                    "type": "integer"
+                },
+                "defense": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "weapons.WeaponCombo": {
+            "type": "object",
+            "properties": {
+                "combo_type": {
+                    "type": "integer"
+                },
+                "count": {
+                    "type": "integer"
+                },
+                "order": {
+                    "type": "integer"
                 }
             }
         }

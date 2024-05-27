@@ -3,6 +3,8 @@ package handlers
 import (
 	"net/http"
 
+	"github.com/google/uuid"
+
 	"table_top/internal/dtos/requests/characters"
 	"table_top/internal/services"
 
@@ -52,7 +54,13 @@ func (h *CharacterHandler) CreateCharacter(c *gin.Context) {
 // @Router /characters/{id} [delete]
 func (h *CharacterHandler) DeleteCharacter(c *gin.Context) {
 	ctx := c.Request.Context()
-	id := c.Param("id")
+	idStr := c.Param("id")
+	id, err := uuid.Parse(idStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
 	if err := h.service.DeleteCharacter(ctx, id); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -70,7 +78,13 @@ func (h *CharacterHandler) DeleteCharacter(c *gin.Context) {
 // @Router /characters/{id} [get]
 func (h *CharacterHandler) GetCharacter(c *gin.Context) {
 	ctx := c.Request.Context()
-	id := c.Param("id")
+	idStr := c.Param("id")
+	id, err := uuid.Parse(idStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
 	character, err := h.service.GetCharacterByID(ctx, id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -102,18 +116,26 @@ func (h *CharacterHandler) ListCharacters(c *gin.Context) {
 // @Tags Characters
 // @Accept  json
 // @Produce  json
+// @Param id path string true "Enemy ID"
 // @Param character body characters.UpdateRequest true "Character"
 // @Success 200 {object} models.Character
-// @Router /characters [put]
+// @Router /characters/{id} [put]
 func (h *CharacterHandler) UpdateCharacter(c *gin.Context) {
 	ctx := c.Request.Context()
+	idStr := c.Param("id")
+	id, err := uuid.Parse(idStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
 	var request characters.UpdateRequest
 	if err := c.ShouldBindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	character, err := h.service.UpdateCharacter(ctx, &request)
+	character, err := h.service.UpdateCharacter(ctx, id, &request)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

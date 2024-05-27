@@ -1,7 +1,6 @@
 package characters
 
 type UpdateRequest struct {
-	ID           string `json:"id"`
 	Name         string `json:"name"`
 	Class        string `json:"class"`
 	Race         string `json:"race"`

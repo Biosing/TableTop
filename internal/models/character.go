@@ -2,7 +2,6 @@ package models
 
 import (
 	"github.com/google/uuid"
-	"gorm.io/gorm"
 )
 
 type Character struct {
@@ -14,11 +13,4 @@ type Character struct {
 	Sex          string    `gorm:"size:64" json:"sex"`
 	Description  string    `gorm:"size:2048" json:"description"`
 	BeginningWay string    `gorm:"size:2048" json:"beginning_way"`
-}
-
-func (character *Character) BeforeCreate(tx *gorm.DB) (err error) {
-	if character.ID == uuid.Nil {
-		character.ID = uuid.New()
-	}
-	return
 }
