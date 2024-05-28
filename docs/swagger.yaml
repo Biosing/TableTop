@@ -207,6 +207,13 @@ definitions:
       range_to:
         type: integer
     type: object
+  game_sessions.CreateRequest:
+    properties:
+      character_id:
+        type: string
+      nickname:
+        type: string
+    type: object
   locations.CreateRequest:
     properties:
       danger_level:
@@ -232,6 +239,17 @@ definitions:
         type: integer
       name:
         type: string
+    type: object
+  models.Backpack:
+    properties:
+      game_session_id:
+        type: string
+      id:
+        type: string
+      item_id:
+        type: string
+      item_type:
+        $ref: '#/definitions/models.ItemType'
     type: object
   models.Character:
     properties:
@@ -310,6 +328,15 @@ definitions:
     type: integer
     x-enum-varnames:
     - PhysicalDamage
+  models.Deck:
+    properties:
+      combo_card:
+        type: string
+      game_session_id:
+        type: string
+      id:
+        type: string
+    type: object
   models.Enemy:
     properties:
       class:
@@ -359,6 +386,41 @@ definitions:
         example: 3
         type: integer
     type: object
+  models.GameSession:
+    properties:
+      backpack:
+        items:
+          $ref: '#/definitions/models.Backpack'
+        type: array
+      character_id:
+        type: string
+      deck:
+        items:
+          $ref: '#/definitions/models.Deck'
+        type: array
+      equipped_weapon_id:
+        type: string
+      experience:
+        type: integer
+      finish_game_date:
+        type: string
+      health:
+        type: integer
+      id:
+        type: string
+      level:
+        type: integer
+      nickname:
+        type: string
+      start_game_date:
+        type: string
+    type: object
+  models.ItemType:
+    enum:
+    - 0
+    type: integer
+    x-enum-varnames:
+    - Weapon
   models.Location:
     properties:
       danger_level:
@@ -1017,6 +1079,21 @@ paths:
       summary: Update an existing enemy move
       tags:
       - EnemyMoves
+  /game_session:
+    get:
+      consumes:
+      - application/json
+      description: Get game session
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GameSession'
+      summary: Get game session
+      tags:
+      - GameSessions
   /locations:
     get:
       description: List all locations
@@ -1207,6 +1284,28 @@ paths:
       summary: Update a special effect
       tags:
       - SpecialEffects
+  /start_game:
+    post:
+      consumes:
+      - application/json
+      description: Start a new game session
+      parameters:
+      - description: GameSession
+        in: body
+        name: gameSession
+        required: true
+        schema:
+          $ref: '#/definitions/game_sessions.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GameSession'
+      summary: Start a new game session
+      tags:
+      - GameSessions
   /weapon_combos:
     get:
       description: List all weapon combos

@@ -14,6 +14,7 @@ var (
 	comboCardHandler       *ComboCardHandler
 	damageComboCardHandler *DamageComboCardHandler
 	specialEffectHandler   *SpecialEffectHandler
+	gameSessionHandler     *GameSessionHandler
 )
 
 func InitHandlers(s services.Services) {
@@ -26,6 +27,7 @@ func InitHandlers(s services.Services) {
 	comboCardHandler = NewComboCardHandler(s.ComboCardService)
 	damageComboCardHandler = NewDamageComboCardHandler(s.DamageComboCardService)
 	specialEffectHandler = NewSpecialEffectHandler(s.SpecialEffectService)
+	gameSessionHandler = NewGameSessionHandler(s.GameSessionService)
 }
 
 func GetCharacterHandler() *CharacterHandler {
@@ -63,3 +65,5 @@ func GetDamageComboCardHandler() *DamageComboCardHandler {
 func GetSpecialEffectHandler() *SpecialEffectHandler {
 	return specialEffectHandler
 }
+
+func GetGameSessionHandler() *GameSessionHandler { return gameSessionHandler }

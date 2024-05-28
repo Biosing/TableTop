@@ -7,7 +7,7 @@ import (
 
 	"table_top/internal/dtos/requests/enemies"
 	models "table_top/internal/models/enemies"
-	enemies3 "table_top/internal/repositories/enemies"
+	repositories "table_top/internal/repositories/enemies"
 )
 
 type EnemyService interface {
@@ -19,10 +19,10 @@ type EnemyService interface {
 }
 
 type enemyService struct {
-	repo enemies3.EnemyRepository
+	repo repositories.EnemyRepository
 }
 
-func NewEnemyService(repo enemies3.EnemyRepository) EnemyService {
+func NewEnemyService(repo repositories.EnemyRepository) EnemyService {
 	return &enemyService{repo: repo}
 }
 

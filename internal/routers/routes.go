@@ -70,4 +70,7 @@ func InitRoutes(router *gin.Engine) {
 	router.DELETE("/special_effects/:id", handlers.GetSpecialEffectHandler().DeleteSpecialEffect)
 	router.GET("/special_effects", handlers.GetSpecialEffectHandler().ListSpecialEffects)
 
+	//Маршруты для Game session
+	router.POST("/start_game", handlers.GetGameSessionHandler().StartGameSession)
+	router.GET("/game_session", handlers.GetGameSessionHandler().GetGameSession)
 }

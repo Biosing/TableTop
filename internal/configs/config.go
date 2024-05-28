@@ -9,11 +9,13 @@ import (
 )
 
 type Config struct {
-	DBUser     string
-	DBPassword string
-	DBName     string
-	DBHost     string
-	DBPort     string
+	DBUser        string
+	DBPassword    string
+	DBName        string
+	DBHost        string
+	DBPort        string
+	SessionSecret string
+	SessionName   string
 }
 
 func LoadConfig(env string) *Config {
@@ -24,11 +26,13 @@ func LoadConfig(env string) *Config {
 	}
 
 	config := &Config{
-		DBUser:     getEnv("DB_USER", "postgres"),
-		DBPassword: getEnv("DB_PASSWORD", "postgres"),
-		DBName:     getEnv("DB_NAME", "table_top"),
-		DBHost:     getEnv("DB_HOST", "localhost"),
-		DBPort:     getEnv("DB_PORT", "5432"),
+		DBUser:        getEnv("DB_USER", "postgres"),
+		DBPassword:    getEnv("DB_PASSWORD", "postgres"),
+		DBName:        getEnv("DB_NAME", "table_top"),
+		DBHost:        getEnv("DB_HOST", "localhost"),
+		DBPort:        getEnv("DB_PORT", "5432"),
+		SessionSecret: getEnv("SESSION_SECRET", "secret"),
+		SessionName:   getEnv("SESSION_NAME", "mysession"),
 	}
 
 	return config

@@ -752,6 +752,29 @@ const docTemplate = `{
                 }
             }
         },
+        "/game_session": {
+            "get": {
+                "description": "Get game session",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "GameSessions"
+                ],
+                "summary": "Get game session",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.GameSession"
+                        }
+                    }
+                }
+            }
+        },
         "/locations": {
             "get": {
                 "description": "List all locations",
@@ -1036,6 +1059,40 @@ const docTemplate = `{
                 "responses": {
                     "204": {
                         "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/start_game": {
+            "post": {
+                "description": "Start a new game session",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "GameSessions"
+                ],
+                "summary": "Start a new game session",
+                "parameters": [
+                    {
+                        "description": "GameSession",
+                        "name": "gameSession",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/game_sessions.CreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.GameSession"
+                        }
                     }
                 }
             }
@@ -1640,6 +1697,17 @@ const docTemplate = `{
                 }
             }
         },
+        "game_sessions.CreateRequest": {
+            "type": "object",
+            "properties": {
+                "character_id": {
+                    "type": "string"
+                },
+                "nickname": {
+                    "type": "string"
+                }
+            }
+        },
         "locations.CreateRequest": {
             "type": "object",
             "properties": {
@@ -1677,6 +1745,23 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
+                }
+            }
+        },
+        "models.Backpack": {
+            "type": "object",
+            "properties": {
+                "game_session_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "item_id": {
+                    "type": "string"
+                },
+                "item_type": {
+                    "$ref": "#/definitions/models.ItemType"
                 }
             }
         },
@@ -1795,6 +1880,20 @@ const docTemplate = `{
                 "PhysicalDamage"
             ]
         },
+        "models.Deck": {
+            "type": "object",
+            "properties": {
+                "combo_card": {
+                    "type": "string"
+                },
+                "game_session_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
         "models.Enemy": {
             "type": "object",
             "properties": {
@@ -1863,6 +1962,59 @@ const docTemplate = `{
                     "example": 3
                 }
             }
+        },
+        "models.GameSession": {
+            "type": "object",
+            "properties": {
+                "backpack": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Backpack"
+                    }
+                },
+                "character_id": {
+                    "type": "string"
+                },
+                "deck": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Deck"
+                    }
+                },
+                "equipped_weapon_id": {
+                    "type": "string"
+                },
+                "experience": {
+                    "type": "integer"
+                },
+                "finish_game_date": {
+                    "type": "string"
+                },
+                "health": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "level": {
+                    "type": "integer"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "start_game_date": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ItemType": {
+            "type": "integer",
+            "enum": [
+                0
+            ],
+            "x-enum-varnames": [
+                "Weapon"
+            ]
         },
         "models.Location": {
             "type": "object",

@@ -7,6 +7,7 @@ import (
 	characterModels "table_top/internal/models/characters"
 	comboCardModels "table_top/internal/models/combo_cards"
 	enemyModels "table_top/internal/models/enemies"
+	gamesModels "table_top/internal/models/games"
 	itemModels "table_top/internal/models/items"
 	locationModels "table_top/internal/models/locations"
 )
@@ -119,6 +120,24 @@ func Migrate(db *gorm.DB) error {
 			},
 			Rollback: func(tx *gorm.DB) error {
 				return tx.Migrator().DropTable("weapons", "weapon_combos")
+			},
+		},
+		{
+			ID: "202405282258",
+			Migrate: func(tx *gorm.DB) error {
+				return tx.AutoMigrate(&gamesModels.GameSession{}, &gamesModels.Backpack{}, &gamesModels.Deck{})
+			},
+			Rollback: func(tx *gorm.DB) error {
+				return tx.Migrator().DropTable("game_session", "backpack", "deck")
+			},
+		},
+		{
+			ID: "202405282300",
+			Migrate: func(tx *gorm.DB) error {
+				return tx.AutoMigrate(&gamesModels.GameSession{})
+			},
+			Rollback: func(tx *gorm.DB) error {
+				return tx.Migrator().DropTable("game_session")
 			},
 		},
 	})

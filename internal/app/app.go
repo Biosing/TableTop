@@ -43,7 +43,7 @@ func Run(env string) {
 	svc := services.InitServices(repos)
 	handlers.InitHandlers(svc)
 
-	router := routers.InitRouter(ctx)
+	router := routers.InitRouter(ctx, cfg)
 
 	log.Println("Application started successfully on :8080")
 	if err := router.Run(":8080"); err != nil {

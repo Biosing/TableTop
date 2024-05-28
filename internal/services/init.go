@@ -5,6 +5,7 @@ import (
 	charactersSrv "table_top/internal/services/characters"
 	comboCardsSrv "table_top/internal/services/combo_cards"
 	enemiesSrv "table_top/internal/services/enemies"
+	gameSessionSrv "table_top/internal/services/games"
 	itemsSrv "table_top/internal/services/items"
 	locationsSrv "table_top/internal/services/locations"
 )
@@ -19,6 +20,7 @@ type Services struct {
 	ComboCardService       comboCardsSrv.ComboCardService
 	DamageComboCardService comboCardsSrv.DamageComboCardService
 	SpecialEffectService   comboCardsSrv.SpecialEffectService
+	GameSessionService     gameSessionSrv.GameSessionService
 }
 
 func InitServices(r repositories.Repositories) Services {
@@ -32,5 +34,6 @@ func InitServices(r repositories.Repositories) Services {
 		ComboCardService:       comboCardsSrv.NewComboCardService(r.ComboCardRepository),
 		DamageComboCardService: comboCardsSrv.NewDamageComboCardService(r.DamageComboCardRepository),
 		SpecialEffectService:   comboCardsSrv.NewSpecialEffectService(r.SpecialEffectRepository),
+		GameSessionService:     gameSessionSrv.NewGameSessionService(r.GameSessionRepository),
 	}
 }

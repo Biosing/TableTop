@@ -6,6 +6,7 @@ import (
 	charactersRepo "table_top/internal/repositories/characters"
 	comboCardsRepo "table_top/internal/repositories/combo_cards"
 	enemiesRepo "table_top/internal/repositories/enemies"
+	gameSessionRepo "table_top/internal/repositories/games"
 	itemsRepo "table_top/internal/repositories/items"
 	locationsRepo "table_top/internal/repositories/locations"
 )
@@ -20,6 +21,7 @@ type Repositories struct {
 	ComboCardRepository       comboCardsRepo.ComboCardRepository
 	DamageComboCardRepository comboCardsRepo.DamageComboCardRepository
 	SpecialEffectRepository   comboCardsRepo.SpecialEffectRepository
+	GameSessionRepository     gameSessionRepo.GameSessionRepository
 }
 
 func InitRepositories(db *gorm.DB) Repositories {
@@ -33,5 +35,6 @@ func InitRepositories(db *gorm.DB) Repositories {
 		ComboCardRepository:       comboCardsRepo.NewComboCardRepository(db),
 		DamageComboCardRepository: comboCardsRepo.NewDamageComboCardRepository(db),
 		SpecialEffectRepository:   comboCardsRepo.NewSpecialEffectRepository(db),
+		GameSessionRepository:     gameSessionRepo.NewGameSessionRepository(db),
 	}
 }
