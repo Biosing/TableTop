@@ -15,6 +15,37 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/add_player": {
+            "post": {
+                "description": "Add player to game session",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "GameSessionsPlayers"
+                ],
+                "summary": "Add player to game session",
+                "parameters": [
+                    {
+                        "description": "GameSession",
+                        "name": "gameSession",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/game_session_players.AddPlayerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/characters": {
             "get": {
                 "description": "List all characters",
@@ -299,6 +330,40 @@ const docTemplate = `{
                 "responses": {
                     "204": {
                         "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/create_game": {
+            "post": {
+                "description": "Create a new game session",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "GameSessions"
+                ],
+                "summary": "Create a new game session",
+                "parameters": [
+                    {
+                        "description": "GameSession",
+                        "name": "gameSession",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/game_sessions.CreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.GameSession"
+                        }
                     }
                 }
             }
@@ -752,6 +817,26 @@ const docTemplate = `{
                 }
             }
         },
+        "/finish_game": {
+            "post": {
+                "description": "Finish game session",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "GameSessions"
+                ],
+                "summary": "Finish game session",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/game_session": {
             "get": {
                 "description": "Get game session",
@@ -770,6 +855,52 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/models.GameSession"
+                        }
+                    }
+                }
+            }
+        },
+        "/list_game_sessions": {
+            "get": {
+                "description": "List game sessions",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "GameSessions"
+                ],
+                "summary": "List game sessions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Name",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.GameSession"
+                            }
                         }
                     }
                 }
@@ -915,6 +1046,37 @@ const docTemplate = `{
                 "responses": {
                     "204": {
                         "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/remove_player": {
+            "post": {
+                "description": "Remove player from game session",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "GameSessionsPlayers"
+                ],
+                "summary": "Remove player from game session",
+                "parameters": [
+                    {
+                        "description": "GameSession",
+                        "name": "gameSession",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/game_session_players.RemovePlayerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
                     }
                 }
             }
@@ -1076,23 +1238,9 @@ const docTemplate = `{
                     "GameSessions"
                 ],
                 "summary": "Start a new game session",
-                "parameters": [
-                    {
-                        "description": "GameSession",
-                        "name": "gameSession",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/game_sessions.CreateRequest"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.GameSession"
-                        }
+                        "description": "OK"
                     }
                 }
             }
@@ -1697,11 +1845,42 @@ const docTemplate = `{
                 }
             }
         },
+        "game_session_players.AddPlayerRequest": {
+            "type": "object",
+            "properties": {
+                "character_id": {
+                    "type": "string"
+                },
+                "game_session_id": {
+                    "type": "string"
+                },
+                "nickname": {
+                    "type": "string"
+                }
+            }
+        },
+        "game_session_players.RemovePlayerRequest": {
+            "type": "object",
+            "properties": {
+                "game_session_id": {
+                    "type": "string"
+                },
+                "nickname": {
+                    "type": "string"
+                }
+            }
+        },
         "game_sessions.CreateRequest": {
             "type": "object",
             "properties": {
                 "character_id": {
                     "type": "string"
+                },
+                "game_session_name": {
+                    "type": "string"
+                },
+                "max_players": {
+                    "type": "integer"
                 },
                 "nickname": {
                     "type": "string"
@@ -1751,9 +1930,6 @@ const docTemplate = `{
         "models.Backpack": {
             "type": "object",
             "properties": {
-                "game_session_id": {
-                    "type": "string"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -1762,6 +1938,9 @@ const docTemplate = `{
                 },
                 "item_type": {
                     "$ref": "#/definitions/models.ItemType"
+                },
+                "player_id": {
+                    "type": "string"
                 }
             }
         },
@@ -1886,10 +2065,10 @@ const docTemplate = `{
                 "combo_card": {
                     "type": "string"
                 },
-                "game_session_id": {
+                "id": {
                     "type": "string"
                 },
-                "id": {
+                "player_id": {
                     "type": "string"
                 }
             }
@@ -1966,41 +2145,23 @@ const docTemplate = `{
         "models.GameSession": {
             "type": "object",
             "properties": {
-                "backpack": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Backpack"
-                    }
-                },
-                "character_id": {
-                    "type": "string"
-                },
-                "deck": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Deck"
-                    }
-                },
-                "equipped_weapon_id": {
-                    "type": "string"
-                },
-                "experience": {
-                    "type": "integer"
-                },
                 "finish_game_date": {
                     "type": "string"
-                },
-                "health": {
-                    "type": "integer"
                 },
                 "id": {
                     "type": "string"
                 },
-                "level": {
+                "max_players": {
                     "type": "integer"
                 },
-                "nickname": {
+                "name": {
                     "type": "string"
+                },
+                "players": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Player"
+                    }
                 },
                 "start_game_date": {
                     "type": "string"
@@ -2035,6 +2196,47 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Player": {
+            "type": "object",
+            "properties": {
+                "backpack": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Backpack"
+                    }
+                },
+                "character_id": {
+                    "type": "string"
+                },
+                "deck": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Deck"
+                    }
+                },
+                "equipped_weapon_id": {
+                    "type": "string"
+                },
+                "experience;": {
+                    "type": "integer"
+                },
+                "game_session_id": {
+                    "type": "string"
+                },
+                "health": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "level": {
+                    "type": "integer"
+                },
+                "nickname": {
                     "type": "string"
                 }
             }

@@ -5,16 +5,17 @@ import (
 )
 
 var (
-	characterHandler       *CharacterHandler
-	locationHandler        *LocationHandler
-	enemyHandler           *EnemyHandler
-	enemyMoveHandler       *EnemyMoveHandler
-	weaponHandler          *WeaponHandler
-	weaponComboHandler     *WeaponComboHandler
-	comboCardHandler       *ComboCardHandler
-	damageComboCardHandler *DamageComboCardHandler
-	specialEffectHandler   *SpecialEffectHandler
-	gameSessionHandler     *GameSessionHandler
+	characterHandler         *CharacterHandler
+	locationHandler          *LocationHandler
+	enemyHandler             *EnemyHandler
+	enemyMoveHandler         *EnemyMoveHandler
+	weaponHandler            *WeaponHandler
+	weaponComboHandler       *WeaponComboHandler
+	comboCardHandler         *ComboCardHandler
+	damageComboCardHandler   *DamageComboCardHandler
+	specialEffectHandler     *SpecialEffectHandler
+	gameSessionHandler       *GameSessionHandler
+	gameSessionPlayerHandler *GameSessionPlayerHandler
 )
 
 func InitHandlers(s services.Services) {
@@ -28,6 +29,7 @@ func InitHandlers(s services.Services) {
 	damageComboCardHandler = NewDamageComboCardHandler(s.DamageComboCardService)
 	specialEffectHandler = NewSpecialEffectHandler(s.SpecialEffectService)
 	gameSessionHandler = NewGameSessionHandler(s.GameSessionService)
+	gameSessionPlayerHandler = NewGameSessionPlayerHandler(s.GameSessionPlayerService)
 }
 
 func GetCharacterHandler() *CharacterHandler {
@@ -67,3 +69,5 @@ func GetSpecialEffectHandler() *SpecialEffectHandler {
 }
 
 func GetGameSessionHandler() *GameSessionHandler { return gameSessionHandler }
+
+func GetGameSessionPlayerHandler() *GameSessionPlayerHandler { return gameSessionPlayerHandler }

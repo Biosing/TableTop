@@ -22,6 +22,7 @@ type Repositories struct {
 	DamageComboCardRepository comboCardsRepo.DamageComboCardRepository
 	SpecialEffectRepository   comboCardsRepo.SpecialEffectRepository
 	GameSessionRepository     gameSessionRepo.GameSessionRepository
+	GameSessionPlayer         gameSessionRepo.GameSessionPlayerRepository
 }
 
 func InitRepositories(db *gorm.DB) Repositories {
@@ -36,5 +37,6 @@ func InitRepositories(db *gorm.DB) Repositories {
 		DamageComboCardRepository: comboCardsRepo.NewDamageComboCardRepository(db),
 		SpecialEffectRepository:   comboCardsRepo.NewSpecialEffectRepository(db),
 		GameSessionRepository:     gameSessionRepo.NewGameSessionRepository(db),
+		GameSessionPlayer:         gameSessionRepo.NewGameSessionPlayerRepository(db),
 	}
 }

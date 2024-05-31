@@ -1,4 +1,4 @@
-package games
+package services
 
 import (
 	"context"
@@ -16,8 +16,11 @@ import (
 )
 
 type GameSessionService interface {
-	StartNewGame(ctx context.Context, c *gin.Context, req *game_sessions.CreateRequest) (*models.GameSession, error)
+	CreateNewGame(ctx context.Context, c *gin.Context, req *game_sessions.CreateRequest) (*models.GameSession, error)
 	GameSession(ctx context.Context, c *gin.Context) (*models.GameSession, error)
+	StartGame(ctx context.Context, c *gin.Context) error
+	FinishGame(ctx context.Context, c *gin.Context) error
+	ListGameSessions(ctx context.Context, req *game_sessions.ListRequest) (*game_sessions.ListResponse, error)
 }
 
 type gameSessionService struct {
@@ -28,18 +31,22 @@ func NewGameSessionService(repo repositories.GameSessionRepository) GameSessionS
 	return &gameSessionService{repo: repo}
 }
 
-func (s *gameSessionService) StartNewGame(ctx context.Context, c *gin.Context, req *game_sessions.CreateRequest) (*models.GameSession, error) {
+func (s *gameSessionService) CreateNewGame(ctx context.Context, c *gin.Context, req *game_sessions.CreateRequest) (*models.GameSession, error) {
 	session := sessions.Default(c)
 
-	now := time.Now()
 	gameSessionID := uuid.New()
 
 	gameSession := &models.GameSession{
-		ID:            gameSessionID,
-		Nickname:      req.Nickname,
-		CharacterID:   req.CharacterID,
-		StartGameDate: &now,
+		ID:         gameSessionID,
+		Name:       req.GameSessionName,
+		MaxPlayers: req.MaxPlayers,
 	}
+
+	player := models.Player{
+		Nickname:    req.Nickname,
+		CharacterID: req.CharacterID,
+	}
+	gameSession.Players = append(gameSession.Players, player)
 
 	if err := s.repo.Create(ctx, gameSession); err != nil {
 		return nil, err
@@ -72,4 +79,88 @@ func (s *gameSessionService) GameSession(ctx context.Context, c *gin.Context) (*
 	}
 
 	return gameSession, nil
+}
+
+func (s *gameSessionService) StartGame(ctx context.Context, c *gin.Context) error {
+	session := sessions.Default(c)
+	gameSessionID := session.Get("game_session_id")
+	if gameSessionID == nil {
+		return errors.New("no game session found in the session")
+	}
+
+	gameSessionUUID, err := uuid.Parse(gameSessionID.(string))
+	if err != nil {
+		return errors.New("invalid game session ID format")
+	}
+
+	gameSession, err := s.repo.GetByID(ctx, gameSessionUUID)
+	if err != nil {
+		return err
+	}
+
+	now := time.Now()
+	gameSession.StartGameDate = &now
+
+	if err := s.repo.Update(ctx, gameSession); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *gameSessionService) FinishGame(ctx context.Context, c *gin.Context) error {
+	session := sessions.Default(c)
+	gameSessionID := session.Get("game_session_id")
+	if gameSessionID == nil {
+		return errors.New("no game session found in the session")
+	}
+
+	gameSessionUUID, err := uuid.Parse(gameSessionID.(string))
+	if err != nil {
+		return errors.New("invalid game session ID format")
+	}
+
+	gameSession, err := s.repo.GetByID(ctx, gameSessionUUID)
+	if err != nil {
+		return err
+	}
+
+	now := time.Now()
+	gameSession.FinishGameDate = &now
+
+	if err := s.repo.Update(ctx, gameSession); err != nil {
+		return err
+	}
+
+	session.Delete("game_session_id")
+	if err := session.Save(); err != nil {
+		return errors.New("failed to save session")
+	}
+
+	return nil
+}
+
+func (s *gameSessionService) ListGameSessions(ctx context.Context, req *game_sessions.ListRequest) (*game_sessions.ListResponse, error) {
+	offset := (req.Page - 1) * req.Limit
+
+	gameSessions, totalCount, err := s.repo.List(ctx, req.Name, req.Limit, offset)
+	if err != nil {
+		return nil, err
+	}
+
+	var result []game_sessions.ListResult
+	for _, gameSession := range gameSessions {
+		item := game_sessions.ListResult{
+			ID:   gameSession.ID,
+			Name: gameSession.Name,
+		}
+		result = append(result, item)
+	}
+
+	response := &game_sessions.ListResponse{
+		TotalCount: totalCount,
+		Results:    result,
+	}
+
+	return response, nil
 }

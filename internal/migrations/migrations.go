@@ -140,6 +140,15 @@ func Migrate(db *gorm.DB) error {
 				return tx.Migrator().DropTable("game_session")
 			},
 		},
+		{
+			ID: "202405312252",
+			Migrate: func(tx *gorm.DB) error {
+				return tx.AutoMigrate(&gamesModels.GameSession{})
+			},
+			Rollback: func(tx *gorm.DB) error {
+				return tx.Migrator().DropTable("game_session")
+			},
+		},
 	})
 
 	return m.Migrate()

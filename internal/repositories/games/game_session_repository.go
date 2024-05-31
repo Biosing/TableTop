@@ -12,6 +12,8 @@ import (
 type GameSessionRepository interface {
 	Create(ctx context.Context, enemy *models.GameSession) error
 	GetByID(ctx context.Context, id uuid.UUID) (*models.GameSession, error)
+	List(ctx context.Context, name string, limit int, offset int) ([]*models.GameSession, int, error)
+	Update(ctx context.Context, gameSession *models.GameSession) error
 }
 
 type gameSessionRepository struct {
@@ -33,4 +35,31 @@ func (r *gameSessionRepository) GetByID(ctx context.Context, id uuid.UUID) (*mod
 		return nil, err
 	}
 	return &gameSession, nil
+}
+
+func (r *gameSessionRepository) List(ctx context.Context, name string, limit int, offset int) ([]*models.GameSession, int, error) {
+	var gameSessions []*models.GameSession
+	var totalCount int64
+
+	query := r.db.WithContext(ctx)
+
+	if name != "" {
+		query = query.Where("name LIKE ?", "%"+name+"%")
+	}
+
+	query.Model(&models.GameSession{}).Count(&totalCount)
+
+	if limit > 0 {
+		query = query.Limit(limit).Offset(offset)
+	}
+
+	err := query.Find(&gameSessions).Error
+	if err != nil {
+		return nil, 0, err
+	}
+	return gameSessions, int(totalCount), nil
+}
+
+func (r *gameSessionRepository) Update(ctx context.Context, gameSession *models.GameSession) error {
+	return r.db.WithContext(ctx).Model(gameSession).Where("id = ?", gameSession.ID).Updates(gameSession).Error
 }

@@ -71,6 +71,13 @@ func InitRoutes(router *gin.Engine) {
 	router.GET("/special_effects", handlers.GetSpecialEffectHandler().ListSpecialEffects)
 
 	//Маршруты для Game session
+	router.POST("/create_game", handlers.GetGameSessionHandler().CreateGameSession)
 	router.POST("/start_game", handlers.GetGameSessionHandler().StartGameSession)
 	router.GET("/game_session", handlers.GetGameSessionHandler().GetGameSession)
+	router.POST("/finish_game", handlers.GetGameSessionHandler().FinishGameSession)
+	router.GET("/game_sessions", handlers.GetGameSessionHandler().ListGameSessions)
+
+	//Маршруты для Game session player
+	router.POST("/add_player", handlers.GetGameSessionPlayerHandler().AddPlayerToGameSession)
+	router.POST("/remove_player", handlers.GetGameSessionPlayerHandler().RemovePlayerFromGameSession)
 }

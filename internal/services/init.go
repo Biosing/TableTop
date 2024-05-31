@@ -11,29 +11,31 @@ import (
 )
 
 type Services struct {
-	CharacterService       charactersSrv.CharacterService
-	LocationService        locationsSrv.LocationService
-	EnemyService           enemiesSrv.EnemyService
-	EnemyMoveService       enemiesSrv.EnemyMoveService
-	WeaponService          itemsSrv.WeaponService
-	WeaponComboService     itemsSrv.WeaponComboService
-	ComboCardService       comboCardsSrv.ComboCardService
-	DamageComboCardService comboCardsSrv.DamageComboCardService
-	SpecialEffectService   comboCardsSrv.SpecialEffectService
-	GameSessionService     gameSessionSrv.GameSessionService
+	CharacterService         charactersSrv.CharacterService
+	LocationService          locationsSrv.LocationService
+	EnemyService             enemiesSrv.EnemyService
+	EnemyMoveService         enemiesSrv.EnemyMoveService
+	WeaponService            itemsSrv.WeaponService
+	WeaponComboService       itemsSrv.WeaponComboService
+	ComboCardService         comboCardsSrv.ComboCardService
+	DamageComboCardService   comboCardsSrv.DamageComboCardService
+	SpecialEffectService     comboCardsSrv.SpecialEffectService
+	GameSessionService       gameSessionSrv.GameSessionService
+	GameSessionPlayerService gameSessionSrv.GameSessionPlayerService
 }
 
 func InitServices(r repositories.Repositories) Services {
 	return Services{
-		CharacterService:       charactersSrv.NewCharacterService(r.CharacterRepository),
-		LocationService:        locationsSrv.NewLocationService(r.LocationRepository),
-		EnemyService:           enemiesSrv.NewEnemyService(r.EnemyRepository),
-		EnemyMoveService:       enemiesSrv.NewEnemyMoveService(r.EnemyMoveRepository),
-		WeaponService:          itemsSrv.NewWeaponService(r.WeaponRepository),
-		WeaponComboService:     itemsSrv.NewWeaponComboService(r.WeaponComboRepository),
-		ComboCardService:       comboCardsSrv.NewComboCardService(r.ComboCardRepository),
-		DamageComboCardService: comboCardsSrv.NewDamageComboCardService(r.DamageComboCardRepository),
-		SpecialEffectService:   comboCardsSrv.NewSpecialEffectService(r.SpecialEffectRepository),
-		GameSessionService:     gameSessionSrv.NewGameSessionService(r.GameSessionRepository),
+		CharacterService:         charactersSrv.NewCharacterService(r.CharacterRepository),
+		LocationService:          locationsSrv.NewLocationService(r.LocationRepository),
+		EnemyService:             enemiesSrv.NewEnemyService(r.EnemyRepository),
+		EnemyMoveService:         enemiesSrv.NewEnemyMoveService(r.EnemyMoveRepository),
+		WeaponService:            itemsSrv.NewWeaponService(r.WeaponRepository),
+		WeaponComboService:       itemsSrv.NewWeaponComboService(r.WeaponComboRepository),
+		ComboCardService:         comboCardsSrv.NewComboCardService(r.ComboCardRepository),
+		DamageComboCardService:   comboCardsSrv.NewDamageComboCardService(r.DamageComboCardRepository),
+		SpecialEffectService:     comboCardsSrv.NewSpecialEffectService(r.SpecialEffectRepository),
+		GameSessionService:       gameSessionSrv.NewGameSessionService(r.GameSessionRepository),
+		GameSessionPlayerService: gameSessionSrv.NewGameSessionPlayerService(r.GameSessionPlayer),
 	}
 }
