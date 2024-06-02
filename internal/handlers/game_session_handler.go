@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"table_top/internal/dtos/requests/game_sessions"
+	"table_top/internal/dtos/game_sessions"
 	services "table_top/internal/services/games"
 )
 
@@ -24,7 +24,7 @@ func NewGameSessionHandler(service services.GameSessionService) *GameSessionHand
 // @Accept  json
 // @Produce  json
 // @Param gameSession body game_sessions.CreateRequest true "GameSession"
-// @Success 200 {object} models.GameSession
+// @Success 200 {object} games.GameSession
 // @Router /create_game [post]
 func (h *GameSessionHandler) CreateGameSession(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -50,7 +50,7 @@ func (h *GameSessionHandler) CreateGameSession(c *gin.Context) {
 // @Tags GameSessions
 // @Accept  json
 // @Produce  json
-// @Success 200 {object} models.GameSession
+// @Success 200 {object} games.GameSession
 // @Router /game_session [get]
 func (h *GameSessionHandler) GetGameSession(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -114,7 +114,7 @@ func (h *GameSessionHandler) FinishGameSession(c *gin.Context) {
 // @Param name query string false "Name"
 // @Param page query int false "Page"
 // @Param limit query int false "Limit"
-// @Success 200 {object} []models.GameSession
+// @Success 200 {object} []games.GameSession
 // @Router /list_game_sessions [get]
 func (h *GameSessionHandler) ListGameSessions(c *gin.Context) {
 	ctx := c.Request.Context()

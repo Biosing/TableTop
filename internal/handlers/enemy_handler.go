@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"table_top/internal/dtos/requests/enemies"
+	"table_top/internal/dtos/enemies"
 	services "table_top/internal/services/enemies"
 )
 
@@ -25,7 +25,7 @@ func NewEnemyHandler(service services.EnemyService) *EnemyHandler {
 // @Accept  json
 // @Produce  json
 // @Param enemy body enemies.CreateRequest true "Enemy"
-// @Success 200 {object} models.Enemy
+// @Success 200 {object} enemies.Enemy
 // @Router /enemies [post]
 func (h *EnemyHandler) CreateEnemy(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -52,7 +52,7 @@ func (h *EnemyHandler) CreateEnemy(c *gin.Context) {
 // @Produce  json
 // @Param id path string true "Enemy ID"
 // @Param enemy body enemies.UpdateRequest true "Enemy"
-// @Success 200 {object} models.Enemy
+// @Success 200 {object} enemies.Enemy
 // @Router /enemies/{id} [put]
 func (h *EnemyHandler) UpdateEnemy(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -84,7 +84,7 @@ func (h *EnemyHandler) UpdateEnemy(c *gin.Context) {
 // @Tags Enemies
 // @Produce  json
 // @Param id path string true "Enemy ID"
-// @Success 200 {object} models.Enemy
+// @Success 200 {object} enemies.Enemy
 // @Router /enemies/{id} [get]
 func (h *EnemyHandler) GetEnemy(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -133,7 +133,7 @@ func (h *EnemyHandler) DeleteEnemy(c *gin.Context) {
 // @Description List all enemies
 // @Tags Enemies
 // @Produce  json
-// @Success 200 {array} models.Enemy
+// @Success 200 {array} enemies.Enemy
 // @Router /enemies [get]
 func (h *EnemyHandler) ListEnemies(c *gin.Context) {
 	ctx := c.Request.Context()

@@ -6,8 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"table_top/internal/dtos/requests/weapons"
-	"table_top/internal/services/items"
+	"table_top/internal/dtos/weapons"
+	services "table_top/internal/services/items"
 )
 
 type WeaponHandler struct {
@@ -25,7 +25,7 @@ func NewWeaponHandler(service services.WeaponService) *WeaponHandler {
 // @Accept  json
 // @Produce  json
 // @Param weapon body weapons.CreateRequest true "Weapon"
-// @Success 200 {object} models.Weapon
+// @Success 200 {object} items.Weapon
 // @Router /weapons [post]
 func (h *WeaponHandler) CreateWeapon(c *gin.Context) {
 	var req weapons.CreateRequest
@@ -49,7 +49,7 @@ func (h *WeaponHandler) CreateWeapon(c *gin.Context) {
 // @Tags Weapons
 // @Produce  json
 // @Param id path string true "Weapon ID"
-// @Success 200 {object} models.Weapon
+// @Success 200 {object} items.Weapon
 // @Router /weapons/{id} [get]
 func (h *WeaponHandler) GetWeapon(c *gin.Context) {
 	id := c.Param("id")
@@ -76,7 +76,7 @@ func (h *WeaponHandler) GetWeapon(c *gin.Context) {
 // @Produce  json
 // @Param id path string true "Weapon ID"
 // @Param weapon body weapons.UpdateRequest true "Weapon"
-// @Success 200 {object} models.Weapon
+// @Success 200 {object} items.Weapon
 // @Router /weapons/{id} [put]
 func (h *WeaponHandler) UpdateWeapon(c *gin.Context) {
 	id := c.Param("id")
@@ -129,7 +129,7 @@ func (h *WeaponHandler) DeleteWeapon(c *gin.Context) {
 // @Description List all weapons
 // @Tags Weapons
 // @Produce  json
-// @Success 200 {array} models.Weapon
+// @Success 200 {object} []items.Weapon
 // @Router /weapons [get]
 func (h *WeaponHandler) ListWeapons(c *gin.Context) {
 	wpn, err := h.service.ListWeapons(c.Request.Context())

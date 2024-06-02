@@ -5,17 +5,17 @@ import (
 
 	"github.com/google/uuid"
 
-	"table_top/internal/dtos/requests/special_effects"
+	dtos "table_top/internal/dtos/special_effects"
 	models "table_top/internal/models/combo_cards"
 	repositories "table_top/internal/repositories/combo_cards"
 )
 
 type SpecialEffectService interface {
-	CreateSpecialEffect(ctx context.Context, req *special_effects.CreateRequest) (*models.SpecialEffect, error)
+	CreateSpecialEffect(ctx context.Context, req *dtos.CreateRequest) (*models.SpecialEffect, error)
 	DeleteSpecialEffect(ctx context.Context, id uuid.UUID) error
 	GetSpecialEffectByID(ctx context.Context, id uuid.UUID) (*models.SpecialEffect, error)
 	ListSpecialEffects(ctx context.Context) ([]*models.SpecialEffect, error)
-	UpdateSpecialEffect(ctx context.Context, id uuid.UUID, req *special_effects.UpdateRequest) (*models.SpecialEffect, error)
+	UpdateSpecialEffect(ctx context.Context, id uuid.UUID, req *dtos.UpdateRequest) (*models.SpecialEffect, error)
 }
 
 type specialEffectService struct {
@@ -26,7 +26,7 @@ func NewSpecialEffectService(repo repositories.SpecialEffectRepository) SpecialE
 	return &specialEffectService{repo: repo}
 }
 
-func (s *specialEffectService) CreateSpecialEffect(ctx context.Context, req *special_effects.CreateRequest) (*models.SpecialEffect, error) {
+func (s *specialEffectService) CreateSpecialEffect(ctx context.Context, req *dtos.CreateRequest) (*models.SpecialEffect, error) {
 	specialEffect := &models.SpecialEffect{
 		ComboCardID: req.ComboCardID,
 		Type:        req.Type,
@@ -54,7 +54,7 @@ func (s *specialEffectService) ListSpecialEffects(ctx context.Context) ([]*model
 	return s.repo.List(ctx)
 }
 
-func (s *specialEffectService) UpdateSpecialEffect(ctx context.Context, id uuid.UUID, req *special_effects.UpdateRequest) (*models.SpecialEffect, error) {
+func (s *specialEffectService) UpdateSpecialEffect(ctx context.Context, id uuid.UUID, req *dtos.UpdateRequest) (*models.SpecialEffect, error) {
 	specialEffect, err := s.repo.GetByID(ctx, id)
 	if err != nil {
 		return nil, err

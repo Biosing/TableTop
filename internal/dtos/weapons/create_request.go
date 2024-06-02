@@ -3,7 +3,7 @@ package weapons
 import (
 	"github.com/google/uuid"
 
-	models "table_top/internal/models/items"
+	"table_top/internal/models/items"
 )
 
 type CreateRequest struct {
@@ -15,7 +15,7 @@ type CreateRequest struct {
 }
 
 type WeaponCombo struct {
-	Type  models.WeaponComboType `json:"type"`
-	Count int                    `json:"count"`
-	Order int                    `json:"order"`
+	Type  items.WeaponComboType `json:"type"`
+	Count int                   `json:"count"`
+	Order int                   `json:"order"`
 }

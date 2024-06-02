@@ -5,17 +5,17 @@ import (
 
 	"github.com/google/uuid"
 
-	"table_top/internal/dtos/requests/damage_combo_cards"
+	dtos "table_top/internal/dtos/damage_combo_cards"
 	models "table_top/internal/models/combo_cards"
 	repositories "table_top/internal/repositories/combo_cards"
 )
 
 type DamageComboCardService interface {
-	CreateDamageComboCard(ctx context.Context, req *damage_combo_cards.CreateRequest) (*models.DamageComboCard, error)
+	CreateDamageComboCard(ctx context.Context, req *dtos.CreateRequest) (*models.DamageComboCard, error)
 	DeleteDamageComboCard(ctx context.Context, id uuid.UUID) error
 	GetDamageComboCardByID(ctx context.Context, id uuid.UUID) (*models.DamageComboCard, error)
 	ListDamageComboCards(ctx context.Context) ([]*models.DamageComboCard, error)
-	UpdateDamageComboCard(ctx context.Context, id uuid.UUID, req *damage_combo_cards.UpdateRequest) (*models.DamageComboCard, error)
+	UpdateDamageComboCard(ctx context.Context, id uuid.UUID, req *dtos.UpdateRequest) (*models.DamageComboCard, error)
 }
 
 type damageComboCardService struct {
@@ -26,7 +26,7 @@ func NewDamageComboCardService(repo repositories.DamageComboCardRepository) Dama
 	return &damageComboCardService{repo: repo}
 }
 
-func (s *damageComboCardService) CreateDamageComboCard(ctx context.Context, req *damage_combo_cards.CreateRequest) (*models.DamageComboCard, error) {
+func (s *damageComboCardService) CreateDamageComboCard(ctx context.Context, req *dtos.CreateRequest) (*models.DamageComboCard, error) {
 	damageComboCard := &models.DamageComboCard{
 		ComboCardID: req.ComboCardID,
 		RangeFrom:   req.RangeFrom,
@@ -54,7 +54,7 @@ func (s *damageComboCardService) ListDamageComboCards(ctx context.Context) ([]*m
 	return s.repo.List(ctx)
 }
 
-func (s *damageComboCardService) UpdateDamageComboCard(ctx context.Context, id uuid.UUID, req *damage_combo_cards.UpdateRequest) (*models.DamageComboCard, error) {
+func (s *damageComboCardService) UpdateDamageComboCard(ctx context.Context, id uuid.UUID, req *dtos.UpdateRequest) (*models.DamageComboCard, error) {
 	damageComboCard, err := s.repo.GetByID(ctx, id)
 	if err != nil {
 		return nil, err

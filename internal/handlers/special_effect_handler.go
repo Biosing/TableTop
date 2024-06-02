@@ -6,8 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"table_top/internal/dtos/requests/special_effects"
-	"table_top/internal/services/combo_cards"
+	"table_top/internal/dtos/special_effects"
+	services "table_top/internal/services/combo_cards"
 )
 
 type SpecialEffectHandler struct {
@@ -25,7 +25,7 @@ func NewSpecialEffectHandler(service services.SpecialEffectService) *SpecialEffe
 // @Accept  json
 // @Produce  json
 // @Param specialEffect body special_effects.CreateRequest true "Special Effect"
-// @Success 200 {object} models.SpecialEffect
+// @Success 200 {object} combo_cards.SpecialEffect
 // @Router /special_effects [post]
 func (h *SpecialEffectHandler) CreateSpecialEffect(c *gin.Context) {
 	var req special_effects.CreateRequest
@@ -49,7 +49,7 @@ func (h *SpecialEffectHandler) CreateSpecialEffect(c *gin.Context) {
 // @Tags SpecialEffects
 // @Produce  json
 // @Param id path string true "Special Effect ID"
-// @Success 200 {object} models.SpecialEffect
+// @Success 200 {object} combo_cards.SpecialEffect
 // @Router /special_effects/{id} [get]
 func (h *SpecialEffectHandler) GetSpecialEffect(c *gin.Context) {
 	id := c.Param("id")
@@ -73,7 +73,7 @@ func (h *SpecialEffectHandler) GetSpecialEffect(c *gin.Context) {
 // @Description List all special effects
 // @Tags SpecialEffects
 // @Produce  json
-// @Success 200 {array} models.SpecialEffect
+// @Success 200 {object} []combo_cards.SpecialEffect
 // @Router /special_effects [get]
 func (h *SpecialEffectHandler) ListSpecialEffects(c *gin.Context) {
 	specialEffects, err := h.service.ListSpecialEffects(c.Request.Context())
@@ -93,7 +93,7 @@ func (h *SpecialEffectHandler) ListSpecialEffects(c *gin.Context) {
 // @Produce  json
 // @Param id path string true "Special Effect ID"
 // @Param specialEffect body special_effects.UpdateRequest true "Special Effect"
-// @Success 200 {object} models.SpecialEffect
+// @Success 200 {object} combo_cards.SpecialEffect
 // @Router /special_effects/{id} [put]
 func (h *SpecialEffectHandler) UpdateSpecialEffect(c *gin.Context) {
 	id := c.Param("id")

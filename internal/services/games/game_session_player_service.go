@@ -8,14 +8,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"table_top/internal/dtos/requests/game_session_players"
+	dtos "table_top/internal/dtos/game_session_players"
 	models "table_top/internal/models/games"
 	repositories "table_top/internal/repositories/games"
 )
 
 type GameSessionPlayerService interface {
-	AddPlayer(ctx context.Context, req *game_session_players.AddPlayerRequest) error
-	RemovePlayer(ctx context.Context, c *gin.Context, req *game_session_players.RemovePlayerRequest) error
+	AddPlayer(ctx context.Context, req *dtos.AddPlayerRequest) error
+	RemovePlayer(ctx context.Context, c *gin.Context, req *dtos.RemovePlayerRequest) error
 }
 
 type gameSessionPlayerService struct {
@@ -26,7 +26,7 @@ func NewGameSessionPlayerService(repo repositories.GameSessionPlayerRepository) 
 	return &gameSessionPlayerService{repo: repo}
 }
 
-func (s *gameSessionPlayerService) AddPlayer(ctx context.Context, req *game_session_players.AddPlayerRequest) error {
+func (s *gameSessionPlayerService) AddPlayer(ctx context.Context, req *dtos.AddPlayerRequest) error {
 	duplicateNickname, err := s.repo.CheckDuplicateNickname(ctx, req.GameSessionID, req.Nickname)
 	if err != nil {
 		return err
@@ -52,7 +52,7 @@ func (s *gameSessionPlayerService) AddPlayer(ctx context.Context, req *game_sess
 	return s.repo.AddPlayer(ctx, player)
 }
 
-func (s *gameSessionPlayerService) RemovePlayer(ctx context.Context, c *gin.Context, req *game_session_players.RemovePlayerRequest) error {
+func (s *gameSessionPlayerService) RemovePlayer(ctx context.Context, c *gin.Context, req *dtos.RemovePlayerRequest) error {
 	var gameSessionUUID uuid.UUID
 	var err error
 

@@ -6,8 +6,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"table_top/internal/dtos/requests/enemy_moves"
-	"table_top/internal/services/enemies"
+	services "table_top/internal/services/enemies"
+
+	"table_top/internal/dtos/enemy_moves"
 )
 
 type EnemyMoveHandler struct {
@@ -26,7 +27,7 @@ func NewEnemyMoveHandler(service services.EnemyMoveService) *EnemyMoveHandler {
 // @Produce  json
 // @Param enemyId path string true "Enemy ID"
 // @Param enemyMove body enemy_moves.CreateRequest true "EnemyMove"
-// @Success 200 {object} models.EnemyMove
+// @Success 200 {object} enemies.EnemyMove
 // @Router /enemy_moves/{enemyId} [post]
 func (h *EnemyMoveHandler) CreateEnemyMove(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -60,7 +61,7 @@ func (h *EnemyMoveHandler) CreateEnemyMove(c *gin.Context) {
 // @Produce  json
 // @Param id path string true "EnemyMove ID"
 // @Param enemyMove body enemy_moves.UpdateRequest true "EnemyMove"
-// @Success 200 {object} models.EnemyMove
+// @Success 200 {object} enemies.EnemyMove
 // @Router /enemy_moves/{id} [put]
 func (h *EnemyMoveHandler) UpdateEnemyMove(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -92,7 +93,7 @@ func (h *EnemyMoveHandler) UpdateEnemyMove(c *gin.Context) {
 // @Tags EnemyMoves
 // @Produce  json
 // @Param id path string true "EnemyMove ID"
-// @Success 200 {object} models.EnemyMove
+// @Success 200 {object} enemies.EnemyMove
 // @Router /enemy_moves/{id} [get]
 func (h *EnemyMoveHandler) GetEnemyMove(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -142,7 +143,7 @@ func (h *EnemyMoveHandler) DeleteEnemyMove(c *gin.Context) {
 // @Tags EnemyMoves
 // @Produce  json
 // @Param EnemyID query string false "Enemy ID"
-// @Success 200 {array} models.EnemyMove
+// @Success 200 {object} []enemies.EnemyMove
 // @Router /enemy_moves [get]
 func (h *EnemyMoveHandler) ListEnemyMoves(c *gin.Context) {
 	ctx := c.Request.Context()

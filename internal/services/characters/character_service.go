@@ -5,17 +5,17 @@ import (
 
 	"github.com/google/uuid"
 
-	"table_top/internal/dtos/requests/characters"
+	dtos "table_top/internal/dtos/characters"
 	models "table_top/internal/models/characters"
 	repositories "table_top/internal/repositories/characters"
 )
 
 type CharacterService interface {
-	CreateCharacter(ctx context.Context, character *characters.CreateRequest) (*models.Character, error)
+	CreateCharacter(ctx context.Context, character *dtos.CreateRequest) (*models.Character, error)
 	DeleteCharacter(ctx context.Context, id uuid.UUID) error
 	GetCharacterByID(ctx context.Context, id uuid.UUID) (*models.Character, error)
 	ListCharacters(ctx context.Context) ([]*models.Character, error)
-	UpdateCharacter(ctx context.Context, id uuid.UUID, character *characters.UpdateRequest) (*models.Character, error)
+	UpdateCharacter(ctx context.Context, id uuid.UUID, character *dtos.UpdateRequest) (*models.Character, error)
 }
 
 type characterService struct {
@@ -26,7 +26,7 @@ func NewCharacterService(repo repositories.CharacterRepository) CharacterService
 	return &characterService{repo: repo}
 }
 
-func (s *characterService) CreateCharacter(ctx context.Context, character *characters.CreateRequest) (*models.Character, error) {
+func (s *characterService) CreateCharacter(ctx context.Context, character *dtos.CreateRequest) (*models.Character, error) {
 	repoCharacter := &models.Character{
 		Name:         character.Name,
 		Class:        character.Class,
@@ -56,7 +56,7 @@ func (s *characterService) ListCharacters(ctx context.Context) ([]*models.Charac
 	return s.repo.List(ctx)
 }
 
-func (s *characterService) UpdateCharacter(ctx context.Context, id uuid.UUID, request *characters.UpdateRequest) (*models.Character, error) {
+func (s *characterService) UpdateCharacter(ctx context.Context, id uuid.UUID, request *dtos.UpdateRequest) (*models.Character, error) {
 	character, err := s.repo.GetByID(ctx, id)
 	if err != nil {
 		return nil, err

@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"table_top/internal/dtos/requests/game_session_players"
+	"table_top/internal/dtos/game_session_players"
 	services "table_top/internal/services/games"
 )
 

@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"table_top/internal/dtos/requests/damage_combo_cards"
+	dtos "table_top/internal/dtos/damage_combo_cards"
 	services "table_top/internal/services/combo_cards"
 )
 
@@ -25,10 +25,10 @@ func NewDamageComboCardHandler(service services.DamageComboCardService) *DamageC
 // @Accept  json
 // @Produce  json
 // @Param damageComboCard body damage_combo_cards.CreateRequest true "Damage Combo Card"
-// @Success 200 {object} models.DamageComboCard
+// @Success 200 {object} combo_cards.DamageComboCard
 // @Router /damage_combo_cards [post]
 func (h *DamageComboCardHandler) CreateDamageComboCard(c *gin.Context) {
-	var req damage_combo_cards.CreateRequest
+	var req dtos.CreateRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -49,7 +49,7 @@ func (h *DamageComboCardHandler) CreateDamageComboCard(c *gin.Context) {
 // @Tags DamageComboCards
 // @Produce  json
 // @Param id path string true "Damage Combo Card ID"
-// @Success 200 {object} models.DamageComboCard
+// @Success 200 {object} combo_cards.DamageComboCard
 // @Router /damage_combo_cards/{id} [get]
 func (h *DamageComboCardHandler) GetDamageComboCard(c *gin.Context) {
 	id := c.Param("id")
@@ -73,7 +73,7 @@ func (h *DamageComboCardHandler) GetDamageComboCard(c *gin.Context) {
 // @Description List all damage combo cards
 // @Tags DamageComboCards
 // @Produce  json
-// @Success 200 {array} models.DamageComboCard
+// @Success 200 {array} combo_cards.DamageComboCard
 // @Router /damage_combo_cards [get]
 func (h *DamageComboCardHandler) ListDamageComboCards(c *gin.Context) {
 	damageComboCards, err := h.service.ListDamageComboCards(c.Request.Context())
@@ -93,7 +93,7 @@ func (h *DamageComboCardHandler) ListDamageComboCards(c *gin.Context) {
 // @Produce  json
 // @Param id path string true "Damage Combo Card ID"
 // @Param damageComboCard body damage_combo_cards.UpdateRequest true "Damage Combo Card"
-// @Success 200 {object} models.DamageComboCard
+// @Success 200 {object} combo_cards.DamageComboCard
 // @Router /damage_combo_cards/{id} [put]
 func (h *DamageComboCardHandler) UpdateDamageComboCard(c *gin.Context) {
 	id := c.Param("id")
@@ -103,7 +103,7 @@ func (h *DamageComboCardHandler) UpdateDamageComboCard(c *gin.Context) {
 		return
 	}
 
-	var req damage_combo_cards.UpdateRequest
+	var req dtos.UpdateRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -121,7 +121,7 @@ func (h *DamageComboCardHandler) UpdateDamageComboCard(c *gin.Context) {
 // DeleteDamageComboCard godoc
 // @Summary Delete a damage combo card
 // @Description Delete a damage combo card
-// @Tags DamageComboCards
+// @Tags DamageComboCard
 // @Param id path string true "Damage Combo Card ID"
 // @Success 204
 // @Router /damage_combo_cards/{id} [delete]

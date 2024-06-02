@@ -5,14 +5,14 @@ import (
 
 	"github.com/google/uuid"
 
-	"table_top/internal/dtos/requests/enemies"
+	dtos "table_top/internal/dtos/enemies"
 	models "table_top/internal/models/enemies"
 	repositories "table_top/internal/repositories/enemies"
 )
 
 type EnemyService interface {
-	CreateEnemy(ctx context.Context, req *enemies.CreateRequest) (*models.Enemy, error)
-	UpdateEnemy(ctx context.Context, id uuid.UUID, req *enemies.UpdateRequest) (*models.Enemy, error)
+	CreateEnemy(ctx context.Context, req *dtos.CreateRequest) (*models.Enemy, error)
+	UpdateEnemy(ctx context.Context, id uuid.UUID, req *dtos.UpdateRequest) (*models.Enemy, error)
 	GetEnemyByID(ctx context.Context, id uuid.UUID) (*models.Enemy, error)
 	DeleteEnemy(ctx context.Context, id uuid.UUID) error
 	ListEnemies(ctx context.Context) ([]*models.Enemy, error)
@@ -26,13 +26,13 @@ func NewEnemyService(repo repositories.EnemyRepository) EnemyService {
 	return &enemyService{repo: repo}
 }
 
-func (s *enemyService) CreateEnemy(ctx context.Context, req *enemies.CreateRequest) (*models.Enemy, error) {
+func (s *enemyService) CreateEnemy(ctx context.Context, req *dtos.CreateRequest) (*models.Enemy, error) {
 	enemy := &models.Enemy{
 		Name:         req.Name,
 		Level:        req.Level,
 		Class:        req.Class,
 		Description:  req.Description,
-		Hp:           req.Hp,
+		HP:           req.Hp,
 		Experience:   req.Experience,
 		QuantityDeck: req.QuantityDeck,
 		Defense:      req.Defense,
@@ -54,7 +54,7 @@ func (s *enemyService) CreateEnemy(ctx context.Context, req *enemies.CreateReque
 	return enemy, nil
 }
 
-func (s *enemyService) UpdateEnemy(ctx context.Context, id uuid.UUID, req *enemies.UpdateRequest) (*models.Enemy, error) {
+func (s *enemyService) UpdateEnemy(ctx context.Context, id uuid.UUID, req *dtos.UpdateRequest) (*models.Enemy, error) {
 	enemy, err := s.repo.GetByID(ctx, id)
 	if err != nil {
 		return nil, err
@@ -64,7 +64,7 @@ func (s *enemyService) UpdateEnemy(ctx context.Context, id uuid.UUID, req *enemi
 	enemy.Level = req.Level
 	enemy.Class = req.Class
 	enemy.Description = req.Description
-	enemy.Hp = req.Hp
+	enemy.HP = req.Hp
 	enemy.Experience = req.Experience
 	enemy.QuantityDeck = req.QuantityDeck
 	enemy.Defense = req.Defense

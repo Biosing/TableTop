@@ -7,7 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"table_top/internal/dtos/requests/characters"
+	dtos "table_top/internal/dtos/characters"
 	services "table_top/internal/services/characters"
 )
 
@@ -26,11 +26,11 @@ func NewCharacterHandler(service services.CharacterService) *CharacterHandler {
 // @Accept  json
 // @Produce  json
 // @Param character body characters.CreateRequest true "Character"
-// @Success 200 {object} models.Character
+// @Success 200 {object} characters.Character
 // @Router /characters [post]
 func (h *CharacterHandler) CreateCharacter(c *gin.Context) {
 	ctx := c.Request.Context()
-	var character characters.CreateRequest
+	var character dtos.CreateRequest
 	if err := c.ShouldBindJSON(&character); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -74,7 +74,7 @@ func (h *CharacterHandler) DeleteCharacter(c *gin.Context) {
 // @Tags Characters
 // @Produce  json
 // @Param id path string true "Character ID"
-// @Success 200 {object} models.Character
+// @Success 200 {object} characters.Character
 // @Router /characters/{id} [get]
 func (h *CharacterHandler) GetCharacter(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -98,7 +98,7 @@ func (h *CharacterHandler) GetCharacter(c *gin.Context) {
 // @Description List all characters
 // @Tags Characters
 // @Produce  json
-// @Success 200 {array} models.Character
+// @Success 200 {array} characters.Character
 // @Router /characters [get]
 func (h *CharacterHandler) ListCharacters(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -118,7 +118,7 @@ func (h *CharacterHandler) ListCharacters(c *gin.Context) {
 // @Produce  json
 // @Param id path string true "Enemy ID"
 // @Param character body characters.UpdateRequest true "Character"
-// @Success 200 {object} models.Character
+// @Success 200 {object} characters.Character
 // @Router /characters/{id} [put]
 func (h *CharacterHandler) UpdateCharacter(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -129,7 +129,7 @@ func (h *CharacterHandler) UpdateCharacter(c *gin.Context) {
 		return
 	}
 
-	var request characters.UpdateRequest
+	var request dtos.UpdateRequest
 	if err := c.ShouldBindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

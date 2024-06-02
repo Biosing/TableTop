@@ -5,15 +5,15 @@ import (
 
 	"github.com/google/uuid"
 
-	"table_top/internal/dtos/requests/weapons"
+	dtos "table_top/internal/dtos/weapons"
 	models "table_top/internal/models/items"
 	repositories "table_top/internal/repositories/items"
 )
 
 type WeaponService interface {
-	CreateWeapon(ctx context.Context, req *weapons.CreateRequest) (*models.Weapon, error)
+	CreateWeapon(ctx context.Context, req *dtos.CreateRequest) (*models.Weapon, error)
 	GetWeaponByID(ctx context.Context, id uuid.UUID) (*models.Weapon, error)
-	UpdateWeapon(ctx context.Context, id uuid.UUID, req *weapons.UpdateRequest) (*models.Weapon, error)
+	UpdateWeapon(ctx context.Context, id uuid.UUID, req *dtos.UpdateRequest) (*models.Weapon, error)
 	DeleteWeapon(ctx context.Context, id uuid.UUID) error
 	ListWeapons(ctx context.Context) ([]*models.Weapon, error)
 }
@@ -26,7 +26,7 @@ func NewWeaponService(repo repositories.WeaponRepository) WeaponService {
 	return &weaponService{repo: repo}
 }
 
-func (s *weaponService) CreateWeapon(ctx context.Context, req *weapons.CreateRequest) (*models.Weapon, error) {
+func (s *weaponService) CreateWeapon(ctx context.Context, req *dtos.CreateRequest) (*models.Weapon, error) {
 	weapon := &models.Weapon{
 		CharacterID: req.CharacterID,
 		Name:        req.Name,
@@ -40,7 +40,7 @@ func (s *weaponService) CreateWeapon(ctx context.Context, req *weapons.CreateReq
 			Count: combo.Count,
 			Order: combo.Order,
 		}
-		weapon.WeaponCombo = append(weapon.WeaponCombo, weaponCombo)
+		weapon.WeaponCombos = append(weapon.WeaponCombos, weaponCombo)
 	}
 
 	if err := s.repo.Create(ctx, weapon); err != nil {
@@ -54,7 +54,7 @@ func (s *weaponService) GetWeaponByID(ctx context.Context, id uuid.UUID) (*model
 	return s.repo.GetByID(ctx, id)
 }
 
-func (s *weaponService) UpdateWeapon(ctx context.Context, id uuid.UUID, req *weapons.UpdateRequest) (*models.Weapon, error) {
+func (s *weaponService) UpdateWeapon(ctx context.Context, id uuid.UUID, req *dtos.UpdateRequest) (*models.Weapon, error) {
 	weapon, err := s.repo.GetByID(ctx, id)
 	if err != nil {
 		return nil, err

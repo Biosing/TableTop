@@ -1,4 +1,4 @@
-package models
+package enemies
 
 import (
 	"github.com/google/uuid"
@@ -6,13 +6,13 @@ import (
 
 type Enemy struct {
 	ID           uuid.UUID   `gorm:"type:uuid;default:uuid_generate_v4();primaryKey" json:"id"`
-	Name         string      `gorm:"size:128" json:"name" example:"Goblin"`
-	Level        int         `json:"level" example:"1"`
-	Class        string      `gorm:"size:128" json:"class" example:"Warrior"`
-	Description  string      `gorm:"size:2048" json:"description" example:"A small but fierce warrior"`
-	Hp           int         `json:"hp" example:"100"`
-	Experience   int         `json:"experience" example:"10"`
-	QuantityDeck int         `json:"quantity_deck" example:"2"`
-	Defense      int         `json:"defense" example:"2"`
+	Name         string      `gorm:"type:varchar(128);not null" json:"name"`
+	Level        int         `gorm:"type:integer;default:1" json:"level"`
+	Class        string      `gorm:"type:varchar(128);not null" json:"class"`
+	Description  string      `gorm:"type:varchar(2048);default:null" json:"description"`
+	HP           int         `gorm:"type:integer;default:1" json:"hp"`
+	Experience   int         `gorm:"type:integer;default:0" json:"experience"`
+	QuantityDeck int         `gorm:"type:integer;default:1" json:"quantity_deck"`
+	Defense      int         `gorm:"type:integer;default:0" json:"defense"`
 	EnemyMoves   []EnemyMove `gorm:"foreignKey:EnemyID" json:"enemy_moves"`
 }

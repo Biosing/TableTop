@@ -5,15 +5,15 @@ import (
 
 	"github.com/google/uuid"
 
-	"table_top/internal/dtos/requests/weapon_combos"
+	dtos "table_top/internal/dtos/weapon_combos"
 	models "table_top/internal/models/items"
 	repositories "table_top/internal/repositories/items"
 )
 
 type WeaponComboService interface {
-	CreateWeaponCombo(ctx context.Context, req *weapon_combos.CreateRequest) (*models.WeaponCombo, error)
+	CreateWeaponCombo(ctx context.Context, req *dtos.CreateRequest) (*models.WeaponCombo, error)
 	GetWeaponComboByID(ctx context.Context, id uuid.UUID) (*models.WeaponCombo, error)
-	UpdateWeaponCombo(ctx context.Context, id uuid.UUID, req *weapon_combos.UpdateRequest) (*models.WeaponCombo, error)
+	UpdateWeaponCombo(ctx context.Context, id uuid.UUID, req *dtos.UpdateRequest) (*models.WeaponCombo, error)
 	DeleteWeaponCombo(ctx context.Context, id uuid.UUID) error
 	ListWeaponCombos(ctx context.Context) ([]*models.WeaponCombo, error)
 }
@@ -26,7 +26,7 @@ func NewWeaponComboService(repo repositories.WeaponComboRepository) WeaponComboS
 	return &weaponComboService{repo: repo}
 }
 
-func (s *weaponComboService) CreateWeaponCombo(ctx context.Context, req *weapon_combos.CreateRequest) (*models.WeaponCombo, error) {
+func (s *weaponComboService) CreateWeaponCombo(ctx context.Context, req *dtos.CreateRequest) (*models.WeaponCombo, error) {
 	weaponCombo := &models.WeaponCombo{
 		WeaponID: req.WeaponID,
 		Type:     req.Type,
@@ -43,7 +43,7 @@ func (s *weaponComboService) GetWeaponComboByID(ctx context.Context, id uuid.UUI
 	return s.repo.GetByID(ctx, id)
 }
 
-func (s *weaponComboService) UpdateWeaponCombo(ctx context.Context, id uuid.UUID, req *weapon_combos.UpdateRequest) (*models.WeaponCombo, error) {
+func (s *weaponComboService) UpdateWeaponCombo(ctx context.Context, id uuid.UUID, req *dtos.UpdateRequest) (*models.WeaponCombo, error) {
 	weaponCombo, err := s.repo.GetByID(ctx, id)
 	if err != nil {
 		return nil, err

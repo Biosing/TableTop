@@ -7,7 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"table_top/internal/dtos/requests/locations"
+	"table_top/internal/dtos/locations"
 	services "table_top/internal/services/locations"
 )
 
@@ -26,7 +26,7 @@ func NewLocationHandler(service services.LocationService) *LocationHandler {
 // @Accept  json
 // @Produce  json
 // @Param location body locations.CreateRequest true "Location"
-// @Success 200 {object} models.Location
+// @Success 200 {object} locations.Location
 // @Router /locations [post]
 func (h *LocationHandler) CreateLocation(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -51,7 +51,7 @@ func (h *LocationHandler) CreateLocation(c *gin.Context) {
 // @Tags Locations
 // @Produce  json
 // @Param id path string true "Location ID"
-// @Success 200 {object} models.Location
+// @Success 200 {object} locations.Location
 // @Router /locations/{id} [get]
 func (h *LocationHandler) GetLocation(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -75,7 +75,7 @@ func (h *LocationHandler) GetLocation(c *gin.Context) {
 // @Description List all locations
 // @Tags Locations
 // @Produce  json
-// @Success 200 {array} models.Location
+// @Success 200 {object} []locations.Location
 // @Router /locations [get]
 func (h *LocationHandler) ListLocations(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -118,7 +118,7 @@ func (h *LocationHandler) DeleteLocation(c *gin.Context) {
 // @Produce  json
 // @Param id path string true "Location ID"
 // @Param location body locations.UpdateRequest true "Location"
-// @Success 200 {object} models.Location
+// @Success 200 {object} locations.Location
 // @Router /locations/{id} [put]
 func (h *LocationHandler) UpdateLocation(c *gin.Context) {
 	ctx := c.Request.Context()

@@ -10,17 +10,17 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"table_top/internal/dtos/requests/game_sessions"
+	dtos "table_top/internal/dtos/game_sessions"
 	models "table_top/internal/models/games"
 	repositories "table_top/internal/repositories/games"
 )
 
 type GameSessionService interface {
-	CreateNewGame(ctx context.Context, c *gin.Context, req *game_sessions.CreateRequest) (*models.GameSession, error)
+	CreateNewGame(ctx context.Context, c *gin.Context, req *dtos.CreateRequest) (*models.GameSession, error)
 	GameSession(ctx context.Context, c *gin.Context) (*models.GameSession, error)
 	StartGame(ctx context.Context, c *gin.Context) error
 	FinishGame(ctx context.Context, c *gin.Context) error
-	ListGameSessions(ctx context.Context, req *game_sessions.ListRequest) (*game_sessions.ListResponse, error)
+	ListGameSessions(ctx context.Context, req *dtos.ListRequest) (*dtos.ListResponse, error)
 }
 
 type gameSessionService struct {
@@ -31,7 +31,7 @@ func NewGameSessionService(repo repositories.GameSessionRepository) GameSessionS
 	return &gameSessionService{repo: repo}
 }
 
-func (s *gameSessionService) CreateNewGame(ctx context.Context, c *gin.Context, req *game_sessions.CreateRequest) (*models.GameSession, error) {
+func (s *gameSessionService) CreateNewGame(ctx context.Context, c *gin.Context, req *dtos.CreateRequest) (*models.GameSession, error) {
 	session := sessions.Default(c)
 
 	gameSessionID := uuid.New()
@@ -99,7 +99,7 @@ func (s *gameSessionService) StartGame(ctx context.Context, c *gin.Context) erro
 	}
 
 	now := time.Now()
-	gameSession.StartGameDate = &now
+	gameSession.StartGameDate = now
 
 	if err := s.repo.Update(ctx, gameSession); err != nil {
 		return err
@@ -126,7 +126,7 @@ func (s *gameSessionService) FinishGame(ctx context.Context, c *gin.Context) err
 	}
 
 	now := time.Now()
-	gameSession.FinishGameDate = &now
+	gameSession.FinishGameDate = now
 
 	if err := s.repo.Update(ctx, gameSession); err != nil {
 		return err
@@ -140,7 +140,7 @@ func (s *gameSessionService) FinishGame(ctx context.Context, c *gin.Context) err
 	return nil
 }
 
-func (s *gameSessionService) ListGameSessions(ctx context.Context, req *game_sessions.ListRequest) (*game_sessions.ListResponse, error) {
+func (s *gameSessionService) ListGameSessions(ctx context.Context, req *dtos.ListRequest) (*dtos.ListResponse, error) {
 	offset := (req.Page - 1) * req.Limit
 
 	gameSessions, totalCount, err := s.repo.List(ctx, req.Name, req.Limit, offset)
@@ -148,16 +148,16 @@ func (s *gameSessionService) ListGameSessions(ctx context.Context, req *game_ses
 		return nil, err
 	}
 
-	var result []game_sessions.ListResult
+	var result []dtos.ListResult
 	for _, gameSession := range gameSessions {
-		item := game_sessions.ListResult{
+		item := dtos.ListResult{
 			ID:   gameSession.ID,
 			Name: gameSession.Name,
 		}
 		result = append(result, item)
 	}
 
-	response := &game_sessions.ListResponse{
+	response := &dtos.ListResponse{
 		TotalCount: totalCount,
 		Results:    result,
 	}

@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"table_top/internal/dtos/requests/combo_cards"
+	dtos "table_top/internal/dtos/combo_cards"
 	services "table_top/internal/services/combo_cards"
 )
 
@@ -25,10 +25,10 @@ func NewComboCardHandler(service services.ComboCardService) *ComboCardHandler {
 // @Accept  json
 // @Produce  json
 // @Param comboCard body combo_cards.CreateRequest true "Combo Card"
-// @Success 200 {object} models.ComboCard
+// @Success 200 {object} combo_cards.ComboCard
 // @Router /combo_cards [post]
 func (h *ComboCardHandler) CreateComboCard(c *gin.Context) {
-	var req combo_cards.CreateRequest
+	var req dtos.CreateRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -49,7 +49,7 @@ func (h *ComboCardHandler) CreateComboCard(c *gin.Context) {
 // @Tags ComboCards
 // @Produce  json
 // @Param id path string true "Combo Card ID"
-// @Success 200 {object} models.ComboCard
+// @Success 200 {object} combo_cards.ComboCard
 // @Router /combo_cards/{id} [get]
 func (h *ComboCardHandler) GetComboCard(c *gin.Context) {
 	id := c.Param("id")
@@ -73,7 +73,7 @@ func (h *ComboCardHandler) GetComboCard(c *gin.Context) {
 // @Description List all combo cards
 // @Tags ComboCards
 // @Produce  json
-// @Success 200 {array} models.ComboCard
+// @Success 200 {array} []combo_cards.ComboCard
 // @Router /combo_cards [get]
 func (h *ComboCardHandler) ListComboCards(c *gin.Context) {
 	comboCards, err := h.service.ListComboCards(c.Request.Context())
@@ -93,7 +93,7 @@ func (h *ComboCardHandler) ListComboCards(c *gin.Context) {
 // @Produce  json
 // @Param id path string true "Combo Card ID"
 // @Param comboCard body combo_cards.UpdateRequest true "Combo Card"
-// @Success 200 {object} models.ComboCard
+// @Success 200 {object} combo_cards.ComboCard
 // @Router /combo_cards/{id} [put]
 func (h *ComboCardHandler) UpdateComboCard(c *gin.Context) {
 	id := c.Param("id")
@@ -103,7 +103,7 @@ func (h *ComboCardHandler) UpdateComboCard(c *gin.Context) {
 		return
 	}
 
-	var req combo_cards.UpdateRequest
+	var req dtos.UpdateRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

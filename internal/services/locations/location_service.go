@@ -5,30 +5,30 @@ import (
 
 	"github.com/google/uuid"
 
-	"table_top/internal/dtos/requests/locations"
-	locations2 "table_top/internal/models/locations"
-	locations3 "table_top/internal/repositories/locations"
+	dtos "table_top/internal/dtos/locations"
+	models "table_top/internal/models/locations"
+	repositories "table_top/internal/repositories/locations"
 )
 
 type LocationService interface {
-	CreateLocation(ctx context.Context, location *locations.CreateRequest) (*locations2.Location, error)
-	GetLocationByID(ctx context.Context, id uuid.UUID) (*locations2.Location, error)
-	ListLocations(ctx context.Context) ([]*locations2.Location, error)
+	CreateLocation(ctx context.Context, location *dtos.CreateRequest) (*models.Location, error)
+	GetLocationByID(ctx context.Context, id uuid.UUID) (*models.Location, error)
+	ListLocations(ctx context.Context) ([]*models.Location, error)
 	DeleteLocation(ctx context.Context, id uuid.UUID) error
-	UpdateLocation(ctx context.Context, id uuid.UUID, location *locations.UpdateRequest) (*locations2.Location, error)
+	UpdateLocation(ctx context.Context, id uuid.UUID, location *dtos.UpdateRequest) (*models.Location, error)
 }
 
 type locationService struct {
-	repo locations3.LocationRepository
+	repo repositories.LocationRepository
 }
 
-func NewLocationService(repo locations3.LocationRepository) LocationService {
+func NewLocationService(repo repositories.LocationRepository) LocationService {
 	return &locationService{repo: repo}
 }
 
-func (s *locationService) CreateLocation(ctx context.Context, location *locations.CreateRequest) (*locations2.Location, error) {
+func (s *locationService) CreateLocation(ctx context.Context, location *dtos.CreateRequest) (*models.Location, error) {
 
-	locationRepo := &locations2.Location{
+	locationRepo := &models.Location{
 		Name:          location.Name,
 		Level:         location.Level,
 		DangerLevel:   location.DangerLevel,
@@ -42,11 +42,11 @@ func (s *locationService) CreateLocation(ctx context.Context, location *location
 	return locationRepo, nil
 }
 
-func (s *locationService) GetLocationByID(ctx context.Context, id uuid.UUID) (*locations2.Location, error) {
+func (s *locationService) GetLocationByID(ctx context.Context, id uuid.UUID) (*models.Location, error) {
 	return s.repo.GetByID(ctx, id)
 }
 
-func (s *locationService) ListLocations(ctx context.Context) ([]*locations2.Location, error) {
+func (s *locationService) ListLocations(ctx context.Context) ([]*models.Location, error) {
 	return s.repo.List(ctx)
 }
 
@@ -54,7 +54,7 @@ func (s *locationService) DeleteLocation(ctx context.Context, id uuid.UUID) erro
 	return s.repo.Delete(ctx, id)
 }
 
-func (s *locationService) UpdateLocation(ctx context.Context, id uuid.UUID, req *locations.UpdateRequest) (*locations2.Location, error) {
+func (s *locationService) UpdateLocation(ctx context.Context, id uuid.UUID, req *dtos.UpdateRequest) (*models.Location, error) {
 	loc, err := s.repo.GetByID(ctx, id)
 	if err != nil {
 		return nil, err

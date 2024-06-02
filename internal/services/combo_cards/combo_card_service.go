@@ -3,7 +3,7 @@ package services
 import (
 	"context"
 
-	"table_top/internal/dtos/requests/combo_cards"
+	dtos "table_top/internal/dtos/combo_cards"
 	models "table_top/internal/models/combo_cards"
 	repositories "table_top/internal/repositories/combo_cards"
 
@@ -11,11 +11,11 @@ import (
 )
 
 type ComboCardService interface {
-	CreateComboCard(ctx context.Context, req *combo_cards.CreateRequest) (*models.ComboCard, error)
+	CreateComboCard(ctx context.Context, req *dtos.CreateRequest) (*models.ComboCard, error)
 	DeleteComboCard(ctx context.Context, id uuid.UUID) error
 	GetComboCardByID(ctx context.Context, id uuid.UUID) (*models.ComboCard, error)
 	ListComboCards(ctx context.Context) ([]*models.ComboCard, error)
-	UpdateComboCard(ctx context.Context, id uuid.UUID, req *combo_cards.UpdateRequest) (*models.ComboCard, error)
+	UpdateComboCard(ctx context.Context, id uuid.UUID, req *dtos.UpdateRequest) (*models.ComboCard, error)
 }
 
 type comboCardService struct {
@@ -26,7 +26,7 @@ func NewComboCardService(repo repositories.ComboCardRepository) ComboCardService
 	return &comboCardService{repo: repo}
 }
 
-func (s *comboCardService) CreateComboCard(ctx context.Context, req *combo_cards.CreateRequest) (*models.ComboCard, error) {
+func (s *comboCardService) CreateComboCard(ctx context.Context, req *dtos.CreateRequest) (*models.ComboCard, error) {
 	comboCard := &models.ComboCard{
 		CharacterID:         req.CharacterID,
 		Type:                req.Type,
@@ -76,7 +76,7 @@ func (s *comboCardService) ListComboCards(ctx context.Context) ([]*models.ComboC
 	return s.repo.List(ctx)
 }
 
-func (s *comboCardService) UpdateComboCard(ctx context.Context, id uuid.UUID, req *combo_cards.UpdateRequest) (*models.ComboCard, error) {
+func (s *comboCardService) UpdateComboCard(ctx context.Context, id uuid.UUID, req *dtos.UpdateRequest) (*models.ComboCard, error) {
 	comboCard, err := s.repo.GetByID(ctx, id)
 	if err != nil {
 		return nil, err

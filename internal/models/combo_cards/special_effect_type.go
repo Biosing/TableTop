@@ -1,4 +1,4 @@
-package models
+package combo_cards
 
 import (
 	"database/sql/driver"

@@ -5,18 +5,17 @@ import (
 
 	"github.com/google/uuid"
 
+	dtos "table_top/internal/dtos/enemy_moves"
 	models "table_top/internal/models/enemies"
 	repositories "table_top/internal/repositories/enemies"
-
-	"table_top/internal/dtos/requests/enemy_moves"
 )
 
 type EnemyMoveService interface {
-	CreateEnemyMove(ctx context.Context, enemyId uuid.UUID, enemyMove *enemy_moves.CreateRequest) (*models.EnemyMove, error)
+	CreateEnemyMove(ctx context.Context, enemyId uuid.UUID, enemyMove *dtos.CreateRequest) (*models.EnemyMove, error)
 	DeleteEnemyMove(ctx context.Context, id uuid.UUID) error
 	GetEnemyMoveByID(ctx context.Context, id uuid.UUID) (*models.EnemyMove, error)
 	ListEnemyMoves(ctx context.Context, enemyID uuid.UUID) ([]*models.EnemyMove, error)
-	UpdateEnemyMove(ctx context.Context, id uuid.UUID, enemyMove *enemy_moves.UpdateRequest) (*models.EnemyMove, error)
+	UpdateEnemyMove(ctx context.Context, id uuid.UUID, enemyMove *dtos.UpdateRequest) (*models.EnemyMove, error)
 }
 
 type enemyMoveService struct {
@@ -27,7 +26,7 @@ func NewEnemyMoveService(repo repositories.EnemyMoveRepository) EnemyMoveService
 	return &enemyMoveService{repo: repo}
 }
 
-func (s *enemyMoveService) CreateEnemyMove(ctx context.Context, enemyId uuid.UUID, req *enemy_moves.CreateRequest) (*models.EnemyMove, error) {
+func (s *enemyMoveService) CreateEnemyMove(ctx context.Context, enemyId uuid.UUID, req *dtos.CreateRequest) (*models.EnemyMove, error) {
 	enemyMove := &models.EnemyMove{
 		EnemyID:     enemyId,
 		RangeFrom:   req.RangeFrom,
@@ -57,7 +56,7 @@ func (s *enemyMoveService) ListEnemyMoves(ctx context.Context, enemyID uuid.UUID
 	return s.repo.List(ctx)
 }
 
-func (s *enemyMoveService) UpdateEnemyMove(ctx context.Context, id uuid.UUID, req *enemy_moves.UpdateRequest) (*models.EnemyMove, error) {
+func (s *enemyMoveService) UpdateEnemyMove(ctx context.Context, id uuid.UUID, req *dtos.UpdateRequest) (*models.EnemyMove, error) {
 	enemyMove, err := s.repo.GetByID(ctx, id)
 	if err != nil {
 		return nil, err

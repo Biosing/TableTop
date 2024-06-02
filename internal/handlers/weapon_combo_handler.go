@@ -6,8 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 
-	"table_top/internal/dtos/requests/weapon_combos"
-	"table_top/internal/services/items"
+	"table_top/internal/dtos/weapon_combos"
+	services "table_top/internal/services/items"
 )
 
 type WeaponComboHandler struct {
@@ -25,7 +25,7 @@ func NewWeaponComboHandler(service services.WeaponComboService) *WeaponComboHand
 // @Accept  json
 // @Produce  json
 // @Param weaponCombo body weapon_combos.CreateRequest true "WeaponCombo"
-// @Success 200 {object} models.WeaponCombo
+// @Success 200 {object} items.WeaponCombo
 // @Router /weapon_combos [post]
 func (h *WeaponComboHandler) CreateWeaponCombo(c *gin.Context) {
 	var req weapon_combos.CreateRequest
@@ -49,7 +49,7 @@ func (h *WeaponComboHandler) CreateWeaponCombo(c *gin.Context) {
 // @Tags WeaponCombos
 // @Produce  json
 // @Param id path string true "WeaponCombo ID"
-// @Success 200 {object} models.WeaponCombo
+// @Success 200 {object} items.WeaponCombo
 // @Router /weapon_combos/{id} [get]
 func (h *WeaponComboHandler) GetWeaponCombo(c *gin.Context) {
 	id := c.Param("id")
@@ -76,7 +76,7 @@ func (h *WeaponComboHandler) GetWeaponCombo(c *gin.Context) {
 // @Produce  json
 // @Param id path string true "WeaponCombo ID"
 // @Param weaponCombo body weapon_combos.UpdateRequest true "WeaponCombo"
-// @Success 200 {object} models.WeaponCombo
+// @Success 200 {object} items.WeaponCombo
 // @Router /weapon_combos/{id} [put]
 func (h *WeaponComboHandler) UpdateWeaponCombo(c *gin.Context) {
 	id := c.Param("id")
@@ -129,7 +129,7 @@ func (h *WeaponComboHandler) DeleteWeaponCombo(c *gin.Context) {
 // @Description List all weapon combos
 // @Tags WeaponCombos
 // @Produce  json
-// @Success 200 {array} models.WeaponCombo
+// @Success 200 {object} []items.WeaponCombo
 // @Router /weapon_combos [get]
 func (h *WeaponComboHandler) ListWeaponCombos(c *gin.Context) {
 	weaponCombos, err := h.service.ListWeaponCombos(c.Request.Context())
